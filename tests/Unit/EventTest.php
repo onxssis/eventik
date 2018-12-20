@@ -24,4 +24,10 @@ class EventTest extends TestCase
     {
         $this->assertInstanceOf(\App\User::class, $this->event->user);
     }
+
+    /** @test */
+    public function it_belongs_to_a_category()
+    {
+        $this->assertInstanceOf(\App\Category::class, $this->event->category);
+    }
 }

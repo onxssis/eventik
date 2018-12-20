@@ -24,6 +24,12 @@ $factory->define(App\User::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(App\Category::class, function (Faker $faker) {
+    return [
+        'name' => $faker->sentence(2),
+    ];
+});
+
 $factory->define(App\Event::class, function (Faker $faker) {
 
     $title = $faker->sentence();
@@ -35,6 +41,9 @@ $factory->define(App\Event::class, function (Faker $faker) {
     return [
         'user_id' => function () {
             return factory(App\User::class)->create()->id;
+        },
+        'category_id' => function () {
+            return factory(App\Category::class)->create()->id;
         },
         'title' => $title,
         'slug' => str_slug($title),
