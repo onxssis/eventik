@@ -44,7 +44,13 @@ class EventsController extends Controller
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            // 'image' => 'required|image|mimes:jpeg,jpg,png,bmp',
         ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('covers', 'public');
+        }
 
         $event = Event::create($request->all());
 

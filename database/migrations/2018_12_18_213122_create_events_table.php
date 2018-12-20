@@ -26,6 +26,7 @@ class CreateEventsTable extends Migration
             $table->string('latitude');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->string('image');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')

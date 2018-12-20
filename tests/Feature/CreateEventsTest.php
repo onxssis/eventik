@@ -7,6 +7,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Event;
 use App\User;
+use App\Category;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class CreateEventsTest extends TestCase
 {
@@ -23,6 +26,8 @@ class CreateEventsTest extends TestCase
 
     public function test_an_authenticated_user_can_create_an_event()
     {
+        // $this->withoutExceptionHandling();
+
         $user = factory(User::class)->create();
 
         $event = factory(Event::class)->make();
@@ -45,6 +50,26 @@ class CreateEventsTest extends TestCase
         $this->publishEvent(['description' => ''])
             ->assertSessionHasErrors('description');
     }
+
+    public function test_an_event_requires_a_category()
+    {
+        factory(Category::class)->create();
+
+        $this->publishEvent(['category_id' => null])
+            ->assertSessionHasErrors('category_id');
+
+        $this->publishEvent(['category_id' => 88])
+            ->assertSessionHasErrors('category_id');
+    }
+
+    // public function test_an_event_requires_an_image()
+    // {
+    //     $this->publishEvent(['image' => ''])
+    //         ->assertSessionHasErrors('image');
+
+    //     $this->publishEvent(['image' => 'not-an-image'])
+    //         ->assertSessionHasErrors('image');
+    // }
 
     protected function publishEvent($overrides = [])
     {

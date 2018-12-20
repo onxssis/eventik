@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
+use Illuminate\Http\UploadedFile;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,5 +55,6 @@ $factory->define(App\Event::class, function (Faker $faker) {
         'latitude' => $faker->latitude,
         'start_date' => $start_date->toDateTimeString(),
         'end_date' => $end_date->toDateTimeString(),
+        'image' => $faker->image(),
     ];
 });
