@@ -23,7 +23,7 @@ class DeleteEventsTest extends TestCase
 
     public function test_a_user_cant_delete_an_event_he_didnt_create()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
 
         $user = factory(User::class)->create();
 
@@ -35,7 +35,7 @@ class DeleteEventsTest extends TestCase
 
         $this->signIn($user)
             ->delete(route('events.destroy', $event2))
-            ->assertStatus(401);
+            ->assertStatus(403);
 
         $this->assertDatabaseHas('events', [
             'title' => $event2->title,

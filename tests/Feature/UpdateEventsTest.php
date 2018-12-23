@@ -25,20 +25,9 @@ class UpdateEventsTest extends TestCase
             ->assertRedirect('/login');
     }
 
-    // function a_thread_requires_a_title_and_body_to_be_updated()
-    // {
-    //     $thread = create('App\Thread', ['user_id' => auth()->id()]);
-    //     $this->patch($thread->path(), [
-    //         'title' => 'Changed'
-    //     ])->assertSessionHasErrors('body');
-    //     $this->patch($thread->path(), [
-    //         'body' => 'Changed'
-    //     ])->assertSessionHasErrors('title');
-    // }
-
     public function test_an_event_cant_be_updated_unless_by_its_creator()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
 
         $user = factory(User::class)->create();
 
@@ -52,8 +41,15 @@ class UpdateEventsTest extends TestCase
             ->patch(route('events.update', $event2), [
                 'title' => 'title changed',
                 'description' => 'description changed',
+                'price' => $event2->price,
+                'address' => $event2->address,
+                'longitude' => $event2->longitude,
+                'latitude' => $event2->latitude,
+                'start_date' => $event2->start_date,
+                'end_date' => $event2->end_date,
+                'category_id' => $event2->category_id,
             ])
-            ->assertStatus(401);
+            ->assertStatus(403);
 
         $this->assertDatabaseHas('events', [
             'title' => $event2->title,
@@ -63,18 +59,28 @@ class UpdateEventsTest extends TestCase
 
     public function test_an_event_can_be_updated_by_its_creator()
     {
+        $this->withoutExceptionHandling();
+
         $user = factory(User::class)->create();
 
         $event = factory(Event::class)->create([
             'user_id' => $user->id,
         ]);
 
-        $this->signIn($user)
+        $response = $this->signIn($user)
             ->patch(route('events.update', $event), [
                 'title' => 'title changed',
                 'description' => 'description changed',
+                'price' => $event->price,
+                'address' => $event->address,
+                'longitude' => $event->longitude,
+                'latitude' => $event->latitude,
+                'start_date' => $event->start_date,
+                'end_date' => $event->end_date,
+                'category_id' => $event->category_id,
             ])
             ->assertSuccessful();
+
 
         tap($event->fresh(), function ($event) {
             $this->assertEquals('title changed', $event->title);

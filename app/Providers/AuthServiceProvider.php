@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Event' => 'App\Policies\EventPolicy',
     ];
 
     /**
@@ -25,12 +25,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('delete-event', function ($user, $event) {
-            return $user->id === (int)$event->user_id;
-        });
+        // Gate::define('delete-event', function ($user, $event) {
+        //     return $user->id === (int)$event->user_id;
+        // });
 
-        Gate::define('update-event', function ($user, $event) {
-            return $user->id === (int)$event->user_id;
-        });
+        // Gate::define('update-event', function ($user, $event) {
+        //     return $user->id === (int)$event->user_id;
+        // });
     }
 }

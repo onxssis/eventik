@@ -26,7 +26,7 @@ class CreateEventsTest extends TestCase
 
     public function test_an_authenticated_user_can_create_an_event()
     {
-        // $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $user = factory(User::class)->create();
 
@@ -35,10 +35,9 @@ class CreateEventsTest extends TestCase
         $response = $this->actingAs($user)
             ->post(route('events.store', $event->toArray()));
 
-        $response->assertJson($event->toArray());
-
         $this->assertDatabaseHas('events', [
             'title' => $event->title,
+            'user_id' => $user->id
         ]);
     }
 
