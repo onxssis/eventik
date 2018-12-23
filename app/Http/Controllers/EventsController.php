@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class EventsController extends Controller
 {
@@ -90,7 +91,21 @@ class EventsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            // 'category_id' => 'required|exists:categories,id',
+        ]);
+
+        $event = Event::findOrFail($id);
+
+        if (Gate::denies('update-event', $event)) {
+            return response('Unathorized', 401);
+        }
+
+        $event->update($request->all());
+
+        return $event;
     }
 
     /**
@@ -100,6 +115,14 @@ class EventsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $event = Event::findOrFail($id);
+
+        if (Gate::denies('delete-event', $event)) {
+            return response('Unathorized', 401);
+        }
+
+        $event->delete();
+
+        return $event;
     }
 }

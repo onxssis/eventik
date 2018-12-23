@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\User;
 
 class EventTest extends TestCase
 {
@@ -29,5 +30,17 @@ class EventTest extends TestCase
     public function it_belongs_to_a_category()
     {
         $this->assertInstanceOf(\App\Category::class, $this->event->category);
+    }
+
+    /** @test */
+    public function it_knows_if_it_is_bookmarked_or_not()
+    {
+        $user = factory(User::class)->create();
+
+        $this->signIn($user);
+
+        $user->addToBookmarks($this->event);
+
+        $this->assertTrue($this->event->isBookmarkedByUser($user));
     }
 }

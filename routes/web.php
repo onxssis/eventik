@@ -15,6 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('/events/bookmark', 'BookmarksController@store')
+    ->name('bookmarks.store');
+
+Route::delete('/events/{id}/bookmark', 'BookmarksController@destroy')
+    ->name('bookmarks.destroy');
+
 Route::resource('events', 'EventsController');
 
 Auth::routes();

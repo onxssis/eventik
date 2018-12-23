@@ -27,4 +27,19 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function bookmarks()
+    {
+        return $this->belongsToMany(Event::class, 'bookmarks', 'user_id', 'event_id');
+    }
+
+    public function addToBookmarks(Event $event)
+    {
+        return $this->bookmarks()->attach($event);
+    }
+
+    public function removeFromBookmarks(Event $event)
+    {
+        return $this->bookmarks()->detach($event);
+    }
 }
