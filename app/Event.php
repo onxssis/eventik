@@ -3,10 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Event extends Model
 {
     protected $guarded = [];
+
+    protected $dates = ['start_date', 'end_date'];
 
     public static function boot()
     {
@@ -43,5 +46,20 @@ class Event extends Model
         $count = Event::whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$'")->count();
 
         return $count ? "{$slug}-{$count}" : $slug;
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function getUpcomingEvents($limit = 5)
+    {
+        $today = Carbon::today();
+
+        return $this->where('start_date', '>', $today)
+            ->limit($limit)
+            ->orderBy('start_date', 'desc')
+            ->get();
     }
 }
