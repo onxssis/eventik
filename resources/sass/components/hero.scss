@@ -1,0 +1,12 @@
+.main-hero {
+    background-image: url('/images/home/hero.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+@media (min-width: 768px) and (max-width: 1980px) {
+    .main-hero {
+        // height: 500px;
+    }
+}

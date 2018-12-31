@@ -7,5 +7,22 @@
 // Bootstrap
 @import '~bulma/bulma';
 
-
 @import 'components/topbar';
+@import 'components/spacing';
+@import 'components/navbar';
+@import 'components/hero';
+@import 'components/card';
+
+.login-button {
+    background: $orange-dark;
+    color: #ffffff;
+    border-color: transparent;
+    &:hover {
+        color: #ffffff;
+        border-color: transparent;
+    }
+}
+
+img {
+    width: 100% !important;
+}
