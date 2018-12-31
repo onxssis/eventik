@@ -1,0 +1,10 @@
+.topbar {
+    background: $primary;
+}
+
+@media screen and (min-width: 720px) {
+    .topbar {
+        display: flex !important;
+        justify-content: space-evenly !important;
+    }
+}
