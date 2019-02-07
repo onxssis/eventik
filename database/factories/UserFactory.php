@@ -27,7 +27,7 @@ $factory->define(App\User::class, function (Faker $faker) {
 
 $factory->define(App\Category::class, function (Faker $faker) {
     return [
-        'name' => $faker->sentence(2),
+        'name' => $faker->word,
     ];
 });
 
