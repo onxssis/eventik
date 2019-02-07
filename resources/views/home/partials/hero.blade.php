@@ -2,12 +2,15 @@
 
     <div class="hero-body">
         <div class="container">
-            <h1 class="title has-text-white">
-                Find Your Next Experience
-            </h1>
+
 
             <div class="columns is-centered">
+
+
                 <div class="column is-10">
+                    <h1 class="title has-text-white">
+                        Find Your Next Experience
+                    </h1>
                     <div class="box">
                         <div class="field">
                             <div class="control">

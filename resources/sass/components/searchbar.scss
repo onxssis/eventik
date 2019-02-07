@@ -1,0 +1,26 @@
+.search-bar {
+    outline: none;
+    border: none;
+    background: whitesmoke;
+    transition: all 0.3s;
+
+    &:hover {
+        background: $beige-lighter;
+        border: none;
+        box-shadow: none;
+    }
+
+    &:focus {
+        background: whitesmoke;
+        border: none;
+    }
+}
+
+@media (min-width: 1087px) and (max-width: 1980px) {
+    .search-bar {
+        transition: all 0.3s;
+        &.clicked {
+            width: 460px;
+        }
+    }
+}

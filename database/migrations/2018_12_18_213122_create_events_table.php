@@ -27,6 +27,7 @@ class CreateEventsTable extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->string('image');
+            $table->string('thumbnail')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')

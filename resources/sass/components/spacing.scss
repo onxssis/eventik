@@ -10,12 +10,21 @@ $sizes: (
     ('md', 1),
     ('lg', 2),
     ('xl', 4),
-    ('xxl', 8)
+    ('xxl', 8),
+    ('auto', 'auto')
 );
 $positions: (('t', 'top'), ('r', 'right'), ('b', 'bottom'), ('l', 'left'));
 
 @function sizeValue($key, $value) {
-    @return if($key == 'none', 0, $value + $sizeUnit);
+    @if ($key == 'none') {
+        @return 0;
+    }
+
+    @if ($key == 'auto') {
+        @return auto;
+    }
+
+    @return ($value + $sizeUnit + ' ' + !important);
 }
 
 @each $size in $sizes {

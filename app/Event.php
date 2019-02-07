@@ -9,6 +9,8 @@ class Event extends Model
 {
     protected $guarded = [];
 
+    protected $appends = ['formattedPrice'];
+
     protected $dates = ['start_date', 'end_date'];
 
     public static function boot()
@@ -43,7 +45,13 @@ class Event extends Model
     {
         $slug = str_slug($title);
 
-        $count = Event::whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$'")->count();
+        $query = Event::whereRaw("slug ~ '^{$slug}(-[0-9]+)?$'");
+
+        if (app()->environment() === 'testing') {
+            $query = Event::whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$'");
+        }
+
+        $count = $query->count();
 
         return $count ? "{$slug}-{$count}" : $slug;
     }
@@ -62,4 +70,14 @@ class Event extends Model
             ->orderBy('start_date', 'desc')
             ->get();
     }
+
+    public function getFormattedPriceAttribute()
+    {
+        return '&#8358; ' . number_format($this->price / 100);
+    }
+
+    // public function getStartDateAttribute()
+    // {
+    //     return $this->start_date->format('');
+    // }
 }

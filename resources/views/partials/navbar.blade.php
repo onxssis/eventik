@@ -1,4 +1,4 @@
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<nav class="navbar evn-navigation" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item logo" href="/">
             <h2>Eventik</h2>
@@ -19,6 +19,16 @@
     </label>
 
     <div id="navbarBasicExample" class="navbar-menu">
+
+        <div class="navbar-start">
+            <div class="control has-icons-left">
+                <input class="input is-rounded search-bar" type="search">
+        
+                <span class="icon is-left">
+                    <i class="fas fa-search"></i>
+                </span>
+            </div>
+        </div>
 
         <div class="navbar-end">
             <a class="navbar-item">
@@ -48,19 +58,27 @@
                     </div>
                 </div>
 
-                <a class="navbar-item">
-                    Log Out
-                </a>
+                <span>
+                    
+                    <a href="{{ route('logout') }}" class="navbar-item" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                        Log Out
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </span>
 
             @else
 
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button is-light">
+                        <a href="{{ route('register') }}" class="button is-light">
                             Sign up
                         </a>
 
-                        <a class="button login-button">
+                        <a href="{{ route('login') }}" class="button login-button">
                             Log in
                         </a>
                     </div>

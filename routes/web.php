@@ -11,9 +11,7 @@
 |
  */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'EventsController@index')->name('welcome');
 
 Route::post('/events/bookmark', 'BookmarksController@store')
     ->name('bookmarks.store');

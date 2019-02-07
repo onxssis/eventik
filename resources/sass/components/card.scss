@@ -3,10 +3,18 @@
 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+
+    // box-shadow: none;
 
     &:hover {
         transform: translateY(-5px) scale(1.005) translateZ(0);
         cursor: pointer;
+        // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12),
+        //     0 2px 4px 0 rgba(0, 0, 0, 0.08);
     }
 
     &__meta {
@@ -29,6 +37,17 @@
         & span:first-child {
             margin-right: 0.5rem;
         }
+
+        .button {
+            border-radius: 50%;
+        }
+    }
+
+    .title {
+        font-size: 1rem;
+        text-overflow: ellipsis;
+        margin-top: 0.75rem;
+        font-weight: normal;
     }
 
     .subtitle {
@@ -37,8 +56,6 @@
         font-weight: 300;
         line-height: 1.45;
         margin-bottom: 1rem;
+        margin-top: 0.5rem !important;
     }
-}
-
-.card {
 }
