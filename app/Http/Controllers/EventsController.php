@@ -13,7 +13,7 @@ class EventsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['show', 'index']);
+        // $this->middleware('auth')->except(['show', 'index']);
     }
 
     /**
@@ -23,7 +23,9 @@ class EventsController extends Controller
      */
     public function index()
     {
-        //
+        $events = (new Event)->getUpcomingEvents(3);
+
+        return view('welcome', compact('events'));
     }
 
     /**
@@ -33,7 +35,7 @@ class EventsController extends Controller
      */
     public function create()
     {
-        //
+        return view('events.create');
     }
 
     /**
@@ -44,6 +46,8 @@ class EventsController extends Controller
      */
     public function store(StoreEvent $request)
     {
+        dd('le');
+
         $request->uploadEventImage()
             ->persist();
     }
@@ -58,7 +62,7 @@ class EventsController extends Controller
     {
         $event = Event::find($id);
 
-        return $event;
+        return view('events.show', compact('event'));
     }
 
     /**

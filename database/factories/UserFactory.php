@@ -35,9 +35,9 @@ $factory->define(App\Event::class, function (Faker $faker) {
 
     $title = $faker->sentence();
 
-    $start_date = \Carbon\Carbon::now()->addHours(4);
+    $start_date = \Carbon\Carbon::now()->addDays(4);
 
-    $end_date = $start_date->addHours(6);
+    $end_date = $start_date->addDays(6);
 
     return [
         'user_id' => function () {
@@ -55,6 +55,7 @@ $factory->define(App\Event::class, function (Faker $faker) {
         'latitude' => $faker->latitude,
         'start_date' => $start_date->toDateTimeString(),
         'end_date' => $end_date->toDateTimeString(),
-        'image' => $faker->image(),
+        'image' => $faker->imageUrl(),
+        'thumbnail' => $faker->imageUrl(),
     ];
 });

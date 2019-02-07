@@ -41118,6 +41118,18 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app'
 });
+$('input.search-bar').on('click', function () {
+  $(this).animate({
+    width: '420px'
+  }, 'slow');
+});
+var file = document.getElementById('event-file');
+
+file.onchange = function () {
+  if (file.files.length > 0) {
+    document.querySelector('span.file-name').innerHTML = file.files[0].name;
+  }
+};
 
 /***/ }),
 

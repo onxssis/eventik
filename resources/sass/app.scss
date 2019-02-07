@@ -7,5 +7,179 @@
 // Bootstrap
 @import '~bulma/bulma';
 
-
 @import 'components/topbar';
+@import 'components/spacing';
+@import 'components/navbar';
+@import 'components/hero';
+@import 'components/card';
+@import 'components/searchbar';
+
+.evn-navigation {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.login-button {
+    background: $orange-dark;
+    color: #ffffff;
+    border-color: transparent;
+    &:hover {
+        color: #ffffff;
+        border-color: transparent;
+    }
+}
+
+.footer {
+    padding: 3rem 1.5rem;
+}
+
+img {
+    width: 100% !important;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    &#show {
+        background: whitesmoke;
+    }
+}
+
+.navbar-menu {
+    align-items: center;
+}
+
+.columns.head-columns:not(:last-child) {
+    margin-bottom: 0 !important;
+}
+
+.event-head-footer {
+    justify-content: space-between;
+
+    @media (min-width: 1024px) {
+        ticket-button {
+            padding-right: 4rem;
+            padding-left: 4rem;
+        }
+    }
+}
+
+.event-head-footer a.button {
+    border-radius: 100%;
+    border-color: transparent;
+    &:hover {
+        border-color: #dbdbdb;
+    }
+}
+
+.wrapper {
+    margin-right: auto;
+    margin-left: auto;
+
+    max-width: 960px;
+
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+@media (min-width: 1087px) and (max-width: 1980px) {
+    .wrapper {
+        margin-right: auto;
+        margin-left: auto;
+    
+        max-width: 960px;
+    
+        padding-right: 60px;
+        padding-left: 60px;
+    }
+}
+
+.mx-auto {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.primary-color {
+    background: $orange-dark !important;
+    color: #ffffff;
+    border-color: transparent;
+    &:hover {
+        color: #ffffff !important;
+        background: darken($color: $orange-dark, $amount: 20);
+        border-color: transparent;
+    }
+    &:active {
+        color: #ffffff !important;
+        background: darken($color: $orange-dark, $amount: 50);
+        border-color: transparent;
+    }
+    &:focus {
+        color: #ffffff !important;
+        border-color: transparent;
+        box-shadow: 0 0 0 0.125em rgba(244, 67, 54, 0.66) !important;
+    }
+}
+
+.input:focus, .input.is-focused, .input:active, .input.is-active, .textarea:focus, .textarea.is-focused, .textarea:active, .textarea.is-active{
+    border-color: $orange-dark;
+    border-width: 1px;
+    box-shadow: 0 0 0 0.125em rgba(244, 67, 54, 0.66);
+}
+
+.select select.is-active, .select select.is-focused, .select select:active, .select select:focus {
+    border-color: $orange-dark;
+    box-shadow: 0 0 0 0.125em rgba(244, 67, 54, 0.66);
+}
+
+.select:not(.is-multiple):not(.is-loading)::after {
+    border-color: $orange-dark;
+    right: 1.125em;
+    z-index: 4;
+}
+
+.input, .textarea {
+    background-color: #fff;
+    border-color: #dbdbdb;
+    color: #363636;
+    box-shadow: inset 0 1px 2px rgba(10,10,10,.1);
+    max-width: 100%;
+    width: 100%;
+}
+
+.select select {
+    background-color: #fff;
+    border-color: #dbdbdb;
+    color: #363636;
+    cursor: pointer;
+    display: block;
+    font-size: 1em;
+    max-width: 100%;
+    outline: 0;
+}
+
+.select select.is-hovered, .select select:hover {
+    border-color: #b5b5b5;
+}
+
+
+@media (min-width: 768px) and (max-width: 1980px) {
+    .ticker-button {
+        font-size: 1.3rem;
+        padding-left: 8rem;
+        padding-right: 8rem;
+    }
+}
+    
+
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.items-center {
+    align-items: center;
+}
