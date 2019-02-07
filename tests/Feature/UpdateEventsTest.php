@@ -17,7 +17,6 @@ class UpdateEventsTest extends TestCase
         $event = factory(Event::class)->create();
 
         $this->get(route('events.edit', $event))
-            ->assertStatus(302)
             ->assertRedirect('/login');
 
         $this->patch(route('events.update', $event))

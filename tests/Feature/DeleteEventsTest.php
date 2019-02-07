@@ -17,7 +17,6 @@ class DeleteEventsTest extends TestCase
         $event = factory(Event::class)->create();
 
         $this->delete(route('events.destroy', $event))
-            ->assertStatus(302)
             ->assertRedirect('/login');
     }
 

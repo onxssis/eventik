@@ -33,7 +33,11 @@ class CreateEventsTest extends TestCase
         $event = factory(Event::class)->make();
 
         $response = $this->actingAs($user)
-            ->post(route('events.store', $event->toArray()));
+            ->post(route('events.store', $event->toArray() + [
+                    'location' => $event->address, 
+                    'category' => $event->category_id
+                ]
+            ));
 
         $this->assertDatabaseHas('events', [
             'title' => $event->title,
@@ -54,11 +58,11 @@ class CreateEventsTest extends TestCase
     {
         factory(Category::class)->create();
 
-        $this->publishEvent(['category_id' => null])
-            ->assertSessionHasErrors('category_id');
+        $this->publishEvent(['category' => null])
+            ->assertSessionHasErrors('category');
 
-        $this->publishEvent(['category_id' => 88])
-            ->assertSessionHasErrors('category_id');
+        $this->publishEvent(['category' => 88])
+            ->assertSessionHasErrors('category');
     }
 
     // public function test_an_event_requires_an_image()

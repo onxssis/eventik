@@ -13,7 +13,7 @@ class EventsController extends Controller
 
     public function __construct()
     {
-        // $this->middleware('auth')->except(['show', 'index']);
+        $this->middleware('auth')->except(['show', 'index']);
     }
 
     /**
@@ -46,8 +46,6 @@ class EventsController extends Controller
      */
     public function store(StoreEvent $request)
     {
-        dd('le');
-
         $request->uploadEventImage()
             ->persist();
     }
