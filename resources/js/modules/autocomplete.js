@@ -1,0 +1,23 @@
+function initAutocomplete() {
+    const input = document.getElementById('location-autocomplete');
+    const lng = document.getElementById('lng-autocomplete');
+    const lat = document.getElementById('lat-autocomplete');
+
+    const options = {
+        componentRestrictions: { country: 'ng' },
+    };
+
+    let autocomplete = new google.maps.places.Autocomplete(input, options);
+
+    autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        lng.value = place.geometry.location.lng();
+        lat.value = place.geometry.location.lat();
+    });
+
+    // don't submit form when users hit enter on location field
+    console.log(input);
+    input.addEventListener('keydown', e => {
+        if (e.keyCode == 13) e.preventDefault();
+    });
+}

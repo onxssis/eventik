@@ -13,7 +13,7 @@
                                 <p class="title is-3">Create an Event</p>
                             </div>
 
-                            <form action="{{ route('events.store') }}" method="POST" class="content">
+                            <form action="{{ route('events.store') }}" method="POST" class="content" enctype="multipart/form-data">
 
                                 @csrf
                                     
@@ -55,10 +55,10 @@
                                     <label class="label">Location</label>
                                     
                                     <div class="control">
-                                        <input class="input{{ $errors->has('location') ? ' is-danger' : '' }}" type="text" name="location" placeholder="Event location">
+                                        <input class="input{{ $errors->has('location') ? ' is-danger' : '' }}" type="text" name="location" placeholder="Event location" id="location-autocomplete">
 
-                                        <input type="hidden" name="long" value="">
-                                        <input type="hidden" name="lat" value="">
+                                        <input type="hidden" name="longitude" id="lng-autocomplete" value="">
+                                        <input type="hidden" name="latitude" id="lat-autocomplete" value="">
                                     </div>
 
                                     @if ($errors->has('location'))

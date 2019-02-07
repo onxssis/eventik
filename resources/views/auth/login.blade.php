@@ -5,8 +5,8 @@
     <div class="column is-6 mx-auto">
         <article class="card is-rounded has-background-light">
             <div class="card-content">
-                <h1 class="title">
-                    {{ __('Login') }}
+                <h1 class="title is-5 has-text-centered">
+                    {{ __('Welcome Back') }}
                 </h1>
                 
 

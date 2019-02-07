@@ -5,8 +5,8 @@
     <div class="column is-6 mx-auto">
         <article class="card is-rounded has-background-light">
             <div class="card-content">
-                <h1 class="title">
-                    {{ __('Register') }}
+                <h1 class="title is-5 has-text-centered">
+                    {{ __('Welcome') }}
                 </h1>
 
                 <form action="{{ route('register') }}" method="post">
@@ -39,6 +39,21 @@
                         @if ($errors->has('email'))
                             <p class="help is-danger">
                                 {{ $errors->first('email') }}
+                            </p>
+                        @endif
+                    </div>
+
+                    <div class="field">
+                        <div class="control has-icons-left">
+                            <input class="input{{ $errors->has('username') ? ' is-danger' : '' }}" type="text" placeholder="Username" name="username">
+                            <span class="is-left icon">
+                                <i class="fas fa-user"></i>
+                            </span>
+                        </div>
+    
+                        @if ($errors->has('username'))
+                            <p class="help is-danger">
+                                {{ $errors->first('username') }}
                             </p>
                         @endif
                     </div>
