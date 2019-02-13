@@ -21,6 +21,14 @@ Route::delete('/events/{id}/bookmark', 'BookmarksController@destroy')
 
 Route::resource('events', 'EventsController');
 
+Route::post('/events/attend', 'ReservationController@store')
+    ->name('events.attend')
+    ->middleware('auth');
+
+Route::post('/events/unattend', 'ReservationController@destroy')
+    ->name('events.unattend')
+    ->middleware('auth');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

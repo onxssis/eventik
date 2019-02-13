@@ -108,7 +108,7 @@
                                     <h4 class="title is-6">Location</h4>
 
                                     <div class="event-details__data">
-                                        <p>{{ ucfirst($event->address) }}</p>
+                                        <p>{{ ucwords($event->address) }}</p>
 
                                         @if ($event->longitude != null)
                                             <p class="m-t-md">
