@@ -6,7 +6,7 @@
             <div class="columns is-centered m-t-lg m-b-lg">
 
                 <div class="column is-8">
-        
+
                         <div class="box">
 
                             <div class="header m-b-lg has-text-centered">
@@ -16,12 +16,12 @@
                             <form action="{{ route('events.store') }}" method="POST" class="content" enctype="multipart/form-data">
 
                                 @csrf
-                                    
+
                                 <div class="field">
                                     <label class="label">Title</label>
-                                    
+
                                     <div class="control">
-                                        <input class="input{{ $errors->has('title') ? ' is-danger' : '' }}" type="text" placeholder="Event title">
+                                        <input class="input{{ $errors->has('title') ? ' is-danger' : '' }}" type="text" name="title" placeholder="Event title">
                                     </div>
 
                                     @if ($errors->has('title'))
@@ -31,15 +31,20 @@
                                     @endif
 
                                 </div>
-                                        
+
                                 <div class="field">
                                     <label class="label">Category</label>
 
                                     <div class="control">
                                         <div class="select{{ $errors->has('category') ? ' is-danger' : '' }}">
-                                            <select>
+                                            <select name="category">
                                                 <option>Select category</option>
-                                                <option>With options</option>
+
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}">
+                                                        {{ ucfirst($category->name) }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -50,10 +55,10 @@
                                         </p>
                                     @endif
                                 </div>
-                                            
+
                                 <div class="field">
                                     <label class="label">Location</label>
-                                    
+
                                     <div class="control">
                                         <input class="input{{ $errors->has('location') ? ' is-danger' : '' }}" type="text" name="location" placeholder="Event location" id="location-autocomplete">
 
@@ -70,9 +75,9 @@
 
                                 <div class="field">
                                     <label class="label">Description</label>
-                                    
+
                                     <div class="control">
-                                        <textarea class="textarea{{ $errors->has('description') ? ' is-danger' : '' }}" placeholder="Event description" name="decription"></textarea>
+                                        <textarea class="textarea{{ $errors->has('description') ? ' is-danger' : '' }}" name="description" placeholder="Event description" name="decription"></textarea>
                                     </div>
 
                                     @if ($errors->has('description'))
@@ -84,7 +89,7 @@
 
                                 <div class="field">
                                     <label class="label">Start date and Time</label>
-                                    
+
                                     <div class="control">
                                         <input class="input{{ $errors->has('start_date') ? ' is-danger' : '' }}" type="datetime-local" placeholder="Event date" name="start_date" />
                                     </div>
@@ -98,7 +103,7 @@
 
                                 <div class="field">
                                     <label class="label">End date and Time</label>
-                                    
+
                                     <div class="control">
                                         <input class="input{{ $errors->has('end_date') ? ' is-danger' : '' }}" type="datetime-local" placeholder="Event date" name="end_date" />
                                     </div>
@@ -114,7 +119,7 @@
                                     <div class="column is-6">
                                         <div class="field">
                                             <label class="label">Start Date</label>
-                                            
+
                                             <div class="control">
                                                 <textarea class="input" placeholder="Event date" name="start_time"></textarea>
                                             </div>
@@ -123,7 +128,7 @@
                                     <div class="column is-6">
                                         <div class="field">
                                             <label class="label">Description</label>
-                                            
+
                                             <div class="control">
                                                 <textarea class="textarea" placeholder="Event description" name="decription"></textarea>
                                             </div>
@@ -133,7 +138,7 @@
 
                                 <div class="field">
                                     <label class="label">Price</label>
-                                    
+
                                     <div class="control">
                                         <input type="number" class="input{{ $errors->has('price') ? ' is-danger' : '' }}" name="price" value="0">
                                     </div>
@@ -146,7 +151,7 @@
                                 </div>
 
                                 <div class="field">
-                                    <label class="label">Image</label>
+                                    <label class="label">Cover Image</label>
 
                                     <div class="file has-name is-fullwidth">
                                         <label class="file-label">
@@ -160,7 +165,7 @@
                                                 </span>
                                             </span>
                                             <span class="file-name">
-                                                
+
                                             </span>
                                         </label>
 
@@ -171,18 +176,24 @@
                                         @endif
                                     </div>
                                 </div>
-                                            
+
                                 <div class="field m-t-lg">
                                     <div class="control">
                                         <button type="submit" class="button is-link">Submit</button>
                                     </div>
                                 </div>
-                    
+
                         </form>
                     </div>
                 </div>
-        
+
             </div>
         </div>
     </section>
+@endsection
+
+@section('footer-scripts')
+    <script src="{{ asset('js/autocomplete.js') }}"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API') }}&libraries=places&callback=initAutocomplete" async defer></script>
 @endsection

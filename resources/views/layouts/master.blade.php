@@ -15,17 +15,17 @@
 
     <script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1"
         crossorigin="anonymous"></script>
-    
+
 
 </head>
 
 <body>
     <div id="app">
-        
+
         @if (! Request::is('/'))
-        
+
             @include('partials.navbar')
-        
+
         @endif
 
        <main id="@yield('main-class')">
@@ -34,13 +34,9 @@
 
         @include('partials.footer')
     </div>
-    
+
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/autocomplete.js') }}"></script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API') }}&libraries=places&callback=initAutocomplete" async defer></script>
-
-    
+    @yield('footer-scripts')
 
 </body>
 

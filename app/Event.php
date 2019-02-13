@@ -76,6 +76,16 @@ class Event extends Model
         return '&#8358; ' . number_format($this->price / 100);
     }
 
+    public function setStartDateAttribute($value)
+    {
+        $this->attributes['start_date'] = Carbon::createFromFormat('Y-m-d\TH:i', $value);
+    }
+
+    public function setEndDateAttribute($value)
+    {
+        $this->attributes['end_date'] = Carbon::createFromFormat('Y-m-d\TH:i', $value);
+    }
+
     // public function getStartDateAttribute()
     // {
     //     return $this->start_date->format('');

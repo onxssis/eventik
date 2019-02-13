@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreEvent;
 use App\Http\Requests\UpdateEvent;
+use App\Category;
 
 class EventsController extends Controller
 {
@@ -35,7 +36,9 @@ class EventsController extends Controller
      */
     public function create()
     {
-        return view('events.create');
+        $categories = Category::all(['id', 'name']);
+
+        return view('events.create', compact('categories'));
     }
 
     /**
@@ -56,10 +59,8 @@ class EventsController extends Controller
      * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Event $event)
     {
-        $event = Event::find($id);
-
         return view('events.show', compact('event'));
     }
 
