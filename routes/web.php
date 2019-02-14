@@ -19,15 +19,15 @@ Route::post('/events/bookmark', 'BookmarksController@store')
 Route::delete('/events/{id}/bookmark', 'BookmarksController@destroy')
     ->name('bookmarks.destroy');
 
-Route::resource('events', 'EventsController');
-
-Route::post('/events/attend', 'ReservationController@store')
+    Route::post('/events/{slug}/reservations', 'ReservationController@store')
     ->name('events.attend')
     ->middleware('auth');
 
-Route::post('/events/unattend', 'ReservationController@destroy')
+Route::delete('/events/{slug}/reservations', 'ReservationController@destroy')
     ->name('events.unattend')
     ->middleware('auth');
+
+Route::resource('events', 'EventsController');
 
 Auth::routes();
 

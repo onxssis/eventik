@@ -17,9 +17,8 @@ class ParticipateInEvents extends TestCase
         $event = factory(Event::class)->create();
         $user = factory(User::class)->create();
 
-        $response = $this->post(route('events.attend', [
-            'event' => $event->id,
-        ]))->assertRedirect('/login');
+        $response = $this->post(route('events.attend', $event->slug))
+            ->assertRedirect('/login');
     }
 
     public function test_a_user_can_register_to_an_event()
@@ -29,9 +28,7 @@ class ParticipateInEvents extends TestCase
         $user = factory(User::class)->create();
 
         $this->signIn($user)
-            ->post(route('events.attend', [
-                'event' => $event->id,
-            ]));
+            ->post(route('events.attend', $event->slug));
 
         $this->assertDatabaseHas('reservations', [
             'event_id' => $event->id,
@@ -44,28 +41,59 @@ class ParticipateInEvents extends TestCase
         $event = factory(Event::class)->create();
         $user = factory(User::class)->create();
 
-        $response = $this->post(route('events.unattend', [
-            'event' => $event->id,
-        ]))->assertRedirect('/login');
+        $response = $this->delete(route('events.unattend', $event->slug))
+            ->assertRedirect('/login');
     }
 
     public function test_a_user_can_unregister_to_an_event()
     {
-        $this->withoutExceptionHandling();
         $event = factory(Event::class)->create();
         $user = factory(User::class)->create();
 
         $this->signIn($user)
-            ->post(route('events.attend', [
-                'event' => $event->id,
-            ]));
+            ->post(route('events.attend', $event->slug));
 
         $this->signIn($user)
-            ->post(route('events.unattend', [
-                'event' => $event->id,
-            ]));
+            ->delete(route('events.unattend', $event->slug));
 
         $this->assertDatabaseMissing('reservations', [
+            'event_id' => $event->id,
+            'user_id' => $user->id,
+        ]);
+    }
+
+    public function test_a_user_can_bookmark_or_like_an_event()
+    {
+        $this->withoutExceptionHandling();
+        // given a user is signed in
+        $event = factory(Event::class)->create();
+        $user = factory(User::class)->create();
+        // and an event exist
+
+        // when i visit the url to like/bookmark event
+        $this->signIn($user)->post(route('bookmarks.store'), [
+            'event' => $event->id
+        ]);
+
+        // it should be added to my bookmarks/likes
+        $this->assertDatabaseHas('bookmarks', [
+            'event_id' => $event->id,
+            'user_id' => $user->id,
+        ]);
+    }
+
+    public function test_a_user_can_unbookmark_or_unlike_an_event()
+    {
+        $event = factory(Event::class)->create();
+        $user = factory(User::class)->create();
+
+        $this->signIn($user)->post(route('bookmarks.store'), [
+            'event' => $event->id
+        ]);
+
+        $this->signIn($user)->delete(route('bookmarks.destroy', $event->id));
+
+        $this->assertDatabaseMissing('bookmarks', [
             'event_id' => $event->id,
             'user_id' => $user->id,
         ]);

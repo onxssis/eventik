@@ -8,24 +8,21 @@ use App\Reservation;
 
 class ReservationController extends Controller
 {
-    public function store(Request $request)
+    public function store($eventSlug)
     {
-        $event = Event::findOrFail($request->event);
+        $event = Event::where('slug', $eventSlug)->firstOrFail();
 
-        Reservation::create([
-            'user_id' => auth()->id(),
-            'event_id' => $event->id,
-        ]);
+        auth()->user()->attend($event->id);
 
-        return back()->with(['success' => 'Registration successful']);
+        return $event;
     }
 
-    public function destroy(Request $request)
+    public function destroy($eventSlug)
     {
-        $reservation = Reservation::where('event_id', $request->event)->first();
+        $event = Event::where('slug', $eventSlug)->firstOrFail();
 
-        $reservation->delete();
+        auth()->user()->unattend($event->id);
 
-        return back();
+        return $event;
     }
 }

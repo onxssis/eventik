@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Event;
+use App\Bookmark;
 
 class BookmarksController extends Controller
 {
@@ -15,15 +16,24 @@ class BookmarksController extends Controller
 
     public function store(Request $request)
     {
-        $event = Event::findOrFail($request->event_id);
+        $event = Event::findOrFail($request->event);
 
-        return auth()->user()->addToBookmarks($event);
+        Bookmark::create([
+            'user_id' => auth()->id(),
+            'event_id' => $event->id,
+        ]);
+
+        return back();
+
+        // return auth()->user()->addToBookmarks($event);
     }
 
     public function destroy(Request $request, $id)
     {
         $event = Event::findOrFail($id);
 
-        return auth()->user()->removeFromBookmarks($event);
+        Bookmark::where('event_id', $event->id)->first()->delete();
+
+        return back();
     }
 }

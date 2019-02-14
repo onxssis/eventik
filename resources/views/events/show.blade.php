@@ -19,7 +19,7 @@
 
                     </div>
 
-                    <div class="column is-3 p-b-none p-t-none has-background-white" style="background-color: rgba(255,255,255,0.9);">
+                    <div class="column is-4 p-b-none p-t-none has-background-light p-r-none">
 
                         <div class="p-lg">
 
@@ -66,9 +66,7 @@
                     </div>
 
                     <div>
-                        <button class="is-success button is-fullwidth-desktop ticker-button p-r-xl p-l-xl">
-                            Register
-                        </button>
+                    <attend-event :active="{{ json_encode($event->isAttending) }}" :event-id="{{ $event->id }}"></attend-event>
                     </div>
                 </div>
 

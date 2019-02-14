@@ -32,17 +32,17 @@ class EventTest extends TestCase
         $this->assertInstanceOf(\App\Category::class, $this->event->category);
     }
 
-    /** @test */
-    public function it_knows_if_it_is_bookmarked_or_not()
-    {
-        $user = factory(User::class)->create();
+    // /** @test */
+    // public function it_knows_if_it_is_bookmarked_or_not()
+    // {
+    //     $user = factory(User::class)->create();
 
-        $this->signIn($user);
+    //     $this->signIn($user);
 
-        $user->addToBookmarks($this->event);
+    //     $user->addToBookmarks($this->event);
 
-        $this->assertTrue($this->event->isBookmarkedByUser($user));
-    }
+    //     $this->assertTrue($this->event->isBookmarkedByUser($user));
+    // }
 
     /** @test */
     public function it_retrieves_its_upcoming_events()

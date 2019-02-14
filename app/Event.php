@@ -11,6 +11,9 @@ class Event extends Model
 
     protected $appends = ['formattedPrice'];
 
+    protected $withCount = ['bookmarks', 'reservations'];
+    protected $with = ['bookmarks', 'reservations'];
+
     protected $dates = ['start_date', 'end_date'];
 
     public static function boot()
@@ -32,12 +35,21 @@ class Event extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'event_id');
+    }
+
     public function isBookmarkedByUser($user = null)
     {
         $user = $user ? : auth()->user();
 
-        return (bool)Bookmark::where('user_id', $user->id)
-            ->where('event_id', $this->id)
+        return $this->bookmarks()->where('user_id', $user->id)
             ->first();
     }
 
@@ -73,7 +85,14 @@ class Event extends Model
 
     public function getFormattedPriceAttribute()
     {
-        return '&#8358; ' . number_format($this->price / 100);
+        return $this->price > 0 ? '&#8358; ' . number_format($this->price / 100) : 'Free';
+    }
+
+    public function getIsAttendingAttribute()
+    {
+        return $this->reservations()
+                ->where('user_id', auth()->id())
+                ->exists();
     }
 
     public function setStartDateAttribute($value)

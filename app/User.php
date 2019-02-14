@@ -28,18 +28,22 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function bookmarks()
+    public function reservations()
     {
-        return $this->belongsToMany(Event::class, 'bookmarks', 'user_id', 'event_id');
+        return $this->hasMany(Reservation::class, 'user_id');
     }
 
-    public function addToBookmarks(Event $event)
+    public function attend($eventId = null)
     {
-        return $this->bookmarks()->attach($event);
+        $this->reservations()->create([
+            'event_id' => $eventId
+        ]);
     }
 
-    public function removeFromBookmarks(Event $event)
+    public function unattend($eventId = null)
     {
-        return $this->bookmarks()->detach($event);
+        $this->reservations()->where([
+            'event_id' => $eventId
+        ])->first()->delete();
     }
 }
