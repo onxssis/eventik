@@ -14,26 +14,24 @@ class BookmarksController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(Request $request)
+    public function store($id)
     {
-        $event = Event::findOrFail($request->event);
+        $event = Event::findOrFail($id);
 
         Bookmark::create([
             'user_id' => auth()->id(),
             'event_id' => $event->id,
         ]);
 
-        return back();
-
-        // return auth()->user()->addToBookmarks($event);
+        return $event;
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
         $event = Event::findOrFail($id);
 
         Bookmark::where('event_id', $event->id)->first()->delete();
 
-        return back();
+        return $event;
     }
 }

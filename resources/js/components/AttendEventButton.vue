@@ -12,7 +12,8 @@ export default {
   props: ["active", "eventId"],
   data() {
     return {
-      isActive: this.active
+      isActive: this.active,
+      isAuth: this.$root.authenticated
     };
   },
   computed: {
@@ -22,12 +23,22 @@ export default {
   },
   methods: {
     attendEvent() {
-      axios[this.isActive ? "delete" : "post"](location.pathname + '/reservations')
-        .then(() => this.isActive = ! this.isActive)
+      if (!this.isAuth) return this.$modal.show("login");
+
+      axios[this.isActive ? "delete" : "post"](
+        location.pathname + "/reservations"
+      )
+        .then(() => (this.isActive = !this.isActive))
         .catch(e => {
-          if (e.response.data.status == 401) return location.replace("/login");
+          if (!this.isAuth) this.$modal.show("login");
         });
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+button {
+  transition: background-color 0.3s ease-out;
+}
+</style>

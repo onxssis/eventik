@@ -13,13 +13,13 @@
 
 Route::get('/', 'EventsController@index')->name('welcome');
 
-Route::post('/events/bookmark', 'BookmarksController@store')
+Route::post('/events/{id}/bookmark', 'BookmarksController@store')
     ->name('bookmarks.store');
 
 Route::delete('/events/{id}/bookmark', 'BookmarksController@destroy')
     ->name('bookmarks.destroy');
 
-    Route::post('/events/{slug}/reservations', 'ReservationController@store')
+Route::post('/events/{slug}/reservations', 'ReservationController@store')
     ->name('events.attend')
     ->middleware('auth');
 

@@ -71,9 +71,7 @@ class ParticipateInEvents extends TestCase
         // and an event exist
 
         // when i visit the url to like/bookmark event
-        $this->signIn($user)->post(route('bookmarks.store'), [
-            'event' => $event->id
-        ]);
+        $this->signIn($user)->post(route('bookmarks.store', $event->id));
 
         // it should be added to my bookmarks/likes
         $this->assertDatabaseHas('bookmarks', [
@@ -87,9 +85,7 @@ class ParticipateInEvents extends TestCase
         $event = factory(Event::class)->create();
         $user = factory(User::class)->create();
 
-        $this->signIn($user)->post(route('bookmarks.store'), [
-            'event' => $event->id
-        ]);
+        $this->signIn($user)->post(route('bookmarks.store', $event->id));
 
         $this->signIn($user)->delete(route('bookmarks.destroy', $event->id));
 

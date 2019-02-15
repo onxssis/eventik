@@ -8,6 +8,9 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import VueModal from 'vue-js-modal';
+
+Vue.use(VueModal, { dynamic: true, injectModalsContainer: true });
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -24,6 +27,9 @@ Vue.component(
     require('./components/AttendEventButton.vue').default
 );
 
+Vue.component('login-modal', require('./components/AuthModal.vue').default);
+Vue.component('bookmark', require('./components/BookmarkButton.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -32,6 +38,7 @@ Vue.component(
 
 const app = new Vue({
     el: '#app',
+    data: window.App,
 });
 
 $('input.search-bar').on('click', function() {

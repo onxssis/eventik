@@ -46,11 +46,7 @@
                             </span>
 
                             <span>
-                                <a class="button">
-                                    <span class="icon is-small">
-                                        <i class="far fa-bookmark"></i>
-                                    </span>
-                            </a>
+                                <bookmark :bookmarked="{{ json_encode($event->isBookmarked) }}" :id="{{ $event->id }}"></bookmark>
                             </span>
                         </div>
                     </div>

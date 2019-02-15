@@ -9,10 +9,10 @@ class Event extends Model
 {
     protected $guarded = [];
 
-    protected $appends = ['formattedPrice'];
+    protected $appends = ['formattedPrice', 'isAttending', 'isBookmarked'];
 
     protected $withCount = ['bookmarks', 'reservations'];
-    protected $with = ['bookmarks', 'reservations'];
+    // protected $with = [''];
 
     protected $dates = ['start_date', 'end_date'];
 
@@ -49,8 +49,17 @@ class Event extends Model
     {
         $user = $user ? : auth()->user();
 
-        return $this->bookmarks()->where('user_id', $user->id)
+        dd($user);
+
+        return !!$this->bookmarks()->where('user_id', $user->id)
             ->first();
+    }
+
+    public function getIsBookmarkedAttribute()
+    {
+        return $this->bookmarks()
+            ->where('user_id', auth()->id())
+            ->exists();
     }
 
     protected static function makeSlugFromTitle($title)
@@ -91,8 +100,8 @@ class Event extends Model
     public function getIsAttendingAttribute()
     {
         return $this->reservations()
-                ->where('user_id', auth()->id())
-                ->exists();
+            ->where('user_id', auth()->id())
+            ->exists();
     }
 
     public function setStartDateAttribute($value)
