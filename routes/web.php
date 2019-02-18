@@ -13,6 +13,8 @@
 
 Route::get('/', 'EventsController@index')->name('welcome');
 
+Route::get('/b', 'SearchController@index');
+
 Route::post('/events/{id}/bookmark', 'BookmarksController@store')
     ->name('bookmarks.store');
 
