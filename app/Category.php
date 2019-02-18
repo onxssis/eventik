@@ -13,7 +13,7 @@ class Category extends Model
         parent::boot();
 
         static::saving(function ($model) {
-            $model->slug = static::makeSlugFromTitle($model->title);
+            $model->slug = static::makeSlugFromTitle($model->name);
         });
     }
 

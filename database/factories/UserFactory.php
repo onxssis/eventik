@@ -47,7 +47,7 @@ $factory->define(App\Event::class, function (Faker $faker) {
             return factory(App\Category::class)->create()->id;
         },
         'title' => $title,
-        'slug' => str_slug($title),
+        // 'slug' => str_slug($title),
         'description' => $faker->paragraphs(3, true),
         'price' => rand(0, 50000),
         'address' => $faker->address,

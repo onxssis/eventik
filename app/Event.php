@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use App\Filters\Event\EventFilters;
+use Illuminate\Http\Request;
 
 class Event extends Model
 {
@@ -23,6 +26,11 @@ class Event extends Model
         static::saving(function ($model) {
             $model->slug = static::makeSlugFromTitle($model->title);
         });
+    }
+
+    public function scopeFilter(Builder $builder, Request $request, $filters = [])
+    {
+        return (new EventFilters($request))->append($filters)->filter($builder);
     }
 
     public function user()
