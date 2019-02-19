@@ -26,13 +26,11 @@ class UpdateEvent extends FormRequest
         return [
             'title' => 'required|string',
             'description' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
+            'categories' => 'required|array',
             'price' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'address' => 'required',
-            'longitude' => 'required',
-            'latitude' => 'required',
         ];
     }
 
@@ -44,7 +42,6 @@ class UpdateEvent extends FormRequest
 
         $event->title = $this->title;
         $event->description = $this->description;
-        $event->category_id = $this->category_id;
         $event->price = $this->price;
         $event->start_date = $this->start_date;
         $event->end_date = $this->end_date;
@@ -53,6 +50,8 @@ class UpdateEvent extends FormRequest
         $event->latitude = $this->latitude;
 
         $event->save();
+
+        $event->categories()->sync($this->categories);
 
         return $event;
     }

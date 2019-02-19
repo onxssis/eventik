@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
 {
@@ -23,6 +24,12 @@ class Event extends Model
         static::saving(function ($model) {
             $model->slug = static::makeSlugFromTitle($model->title);
         });
+
+        static::deleting(function ($model) {
+            Storage::delete($model->image);
+
+            $model->categories()->detach();
+        });
     }
 
     public function user()
@@ -30,9 +37,9 @@ class Event extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public function bookmarks()
@@ -47,9 +54,7 @@ class Event extends Model
 
     public function isBookmarkedByUser($user = null)
     {
-        $user = $user ? : auth()->user();
-
-        dd($user);
+        $user = $user ?: auth()->user();
 
         return !!$this->bookmarks()->where('user_id', $user->id)
             ->first();

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Event;
 use App\User;
+use App\Category;
 
 class UpdateEventsTest extends TestCase
 {
@@ -36,6 +37,10 @@ class UpdateEventsTest extends TestCase
 
         $event2 = factory(Event::class)->create();
 
+        $categories = factory(Category::class, 3)->create();
+
+        $ids = $categories->pluck('id')->toArray();
+
         $this->signIn($user)
             ->patch(route('events.update', $event2), [
                 'title' => 'title changed',
@@ -46,7 +51,7 @@ class UpdateEventsTest extends TestCase
                 'latitude' => $event2->latitude,
                 'start_date' => $event2->start_date,
                 'end_date' => $event2->end_date,
-                'category_id' => $event2->category_id,
+                'categories' => $ids,
             ])
             ->assertStatus(403);
 
@@ -66,6 +71,10 @@ class UpdateEventsTest extends TestCase
             'user_id' => $user->id,
         ]);
 
+        $categories = factory(Category::class, 3)->create();
+
+        $ids = $categories->pluck('id')->toArray();
+
         $response = $this->signIn($user)
             ->patch(route('events.update', $event), [
                 'title' => 'title changed',
@@ -76,7 +85,7 @@ class UpdateEventsTest extends TestCase
                 'latitude' => $event->latitude,
                 'start_date' => $event->start_date,
                 'end_date' => $event->end_date,
-                'category_id' => $event->category_id,
+                'categories' => $ids,
             ])
             ->assertSuccessful();
 

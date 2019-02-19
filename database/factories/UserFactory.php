@@ -43,9 +43,6 @@ $factory->define(App\Event::class, function (Faker $faker) {
         'user_id' => function () {
             return factory(App\User::class)->create()->id;
         },
-        'category_id' => function () {
-            return factory(App\Category::class)->create()->id;
-        },
         'title' => $title,
         'slug' => str_slug($title),
         'description' => $faker->paragraphs(3, true),

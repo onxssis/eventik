@@ -44,6 +44,8 @@ class DeleteEventsTest extends TestCase
 
     public function test_a_user_can_delete_an_event_he_created()
     {
+        $this->withoutExceptionHandling();
+
         $user = factory(User::class)->create();
 
         $event = factory(Event::class)->create([

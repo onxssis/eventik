@@ -32,17 +32,24 @@ class CreateEventsTest extends TestCase
 
         $event = factory(Event::class)->make();
 
+        $categories = factory(Category::class, 3)->create();
+
+        $ids = $categories->pluck('id')->toArray();
+
         $response = $this->actingAs($user)
             ->post(route('events.store', $event->toArray() + [
-                    'location' => $event->address, 
-                    'category' => $event->category_id
-                ]
-            ));
+                'location' => $event->address,
+                'categories' => $ids,
+            ]));
 
         $this->assertDatabaseHas('events', [
             'title' => $event->title,
             'user_id' => $user->id
         ]);
+
+        $freshEvent = Event::find(1);
+
+        $this->assertInstanceOf(Category::class, $freshEvent->categories[0]);
     }
 
     public function test_all_event_fields_are_validated_correctly()
@@ -54,15 +61,20 @@ class CreateEventsTest extends TestCase
             ->assertSessionHasErrors('description');
     }
 
-    public function test_an_event_requires_a_category()
+    public function test_an_event_requires_at_least_one_category()
     {
-        factory(Category::class)->create();
+        $categories = factory(Category::class, 3)->create();
 
-        $this->publishEvent(['category' => null])
-            ->assertSessionHasErrors('category');
+        $ids = $categories->pluck('id')->toArray();
 
-        $this->publishEvent(['category' => 88])
-            ->assertSessionHasErrors('category');
+        $this->publishEvent(['categories' => null])
+            ->assertSessionHasErrors('categories');
+
+        $this->publishEvent(['categories' => []])
+            ->assertSessionHasErrors('categories');
+
+        $this->publishEvent(['categories' => $ids])
+            ->assertSessionDoesntHaveErrors('categories');
     }
 
     // public function test_an_event_requires_an_image()

@@ -29,7 +29,7 @@ class EventTest extends TestCase
     /** @test */
     public function it_belongs_to_a_category()
     {
-        $this->assertInstanceOf(\App\Category::class, $this->event->category);
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Collection::class, $this->event->categories);
     }
 
     // /** @test */

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Event;
+use App\Category;
 
 class StoreEvent extends FormRequest
 {
@@ -27,13 +28,11 @@ class StoreEvent extends FormRequest
         return [
             'title' => 'required|string',
             'description' => 'required|string',
-            'category' => 'required|exists:categories,id',
+            'categories' => 'required|array',
             'price' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'location' => 'required',
-            'longitude' => 'required',
-            'latitude' => 'required',
         ];
     }
 
@@ -44,7 +43,6 @@ class StoreEvent extends FormRequest
             'title' => $this->title,
             'description' => $this->description,
             'price' => $this->price,
-            'category_id' => $this->category,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'address' => $this->location,
@@ -52,6 +50,10 @@ class StoreEvent extends FormRequest
             'latitude' => $this->latitude,
             'image' => $this->imagePath,
         ]);
+
+        $categories = Category::find($this->categories);
+
+        $event->categories()->attach($categories);
 
         session()->flash('success', 'Event created successfully.');
 

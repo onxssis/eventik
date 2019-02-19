@@ -21,7 +21,7 @@
                                     <label class="label">Title</label>
 
                                     <div class="control">
-                                        <input class="input{{ $errors->has('title') ? ' is-danger' : '' }}" type="text" name="title" placeholder="Event title">
+                                        <input class="input{{ $errors->has('title') ? ' is-danger' : '' }}" type="text" name="title" placeholder="Event title" required>
                                     </div>
 
                                     @if ($errors->has('title'))
@@ -33,34 +33,10 @@
                                 </div>
 
                                 <div class="field">
-                                    <label class="label">Category</label>
-
-                                    <div class="control">
-                                        <div class="select{{ $errors->has('category') ? ' is-danger' : '' }}">
-                                            <select name="category">
-                                                <option>Select category</option>
-
-                                                @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}">
-                                                        {{ ucfirst($category->name) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    @if ($errors->has('category'))
-                                        <p class="help is-danger">
-                                            {{ $errors->first('category') }}
-                                        </p>
-                                    @endif
-                                </div>
-
-                                <div class="field">
                                     <label class="label">Location</label>
 
                                     <div class="control">
-                                        <input class="input{{ $errors->has('location') ? ' is-danger' : '' }}" type="text" name="location" placeholder="Event location" id="location-autocomplete">
+                                        <input class="input{{ $errors->has('location') ? ' is-danger' : '' }}" type="text" name="location" placeholder="Event location" id="location-autocomplete" required>
 
                                         <input type="hidden" name="longitude" id="lng-autocomplete" value="">
                                         <input type="hidden" name="latitude" id="lat-autocomplete" value="">
@@ -77,7 +53,7 @@
                                     <label class="label">Description</label>
 
                                     <div class="control">
-                                        <textarea class="textarea{{ $errors->has('description') ? ' is-danger' : '' }}" name="description" placeholder="Event description" name="decription"></textarea>
+                                        <textarea class="textarea{{ $errors->has('description') ? ' is-danger' : '' }}" name="description" placeholder="Event description" name="decription" required></textarea>
                                     </div>
 
                                     @if ($errors->has('description'))
@@ -91,7 +67,7 @@
                                     <label class="label">Start date and Time</label>
 
                                     <div class="control">
-                                        <input class="input{{ $errors->has('start_date') ? ' is-danger' : '' }}" type="datetime-local" placeholder="Event date" name="start_date" />
+                                        <input class="input{{ $errors->has('start_date') ? ' is-danger' : '' }}" type="datetime-local" placeholder="Event date" name="start_date" required />
                                     </div>
 
                                     @if ($errors->has('start_date'))
@@ -105,7 +81,7 @@
                                     <label class="label">End date and Time</label>
 
                                     <div class="control">
-                                        <input class="input{{ $errors->has('end_date') ? ' is-danger' : '' }}" type="datetime-local" placeholder="Event date" name="end_date" />
+                                        <input class="input{{ $errors->has('end_date') ? ' is-danger' : '' }}" type="datetime-local" placeholder="Event date" name="end_date" required />
                                     </div>
 
                                     @if ($errors->has('end_date'))
@@ -114,27 +90,6 @@
                                         </p>
                                     @endif
                                 </div>
-
-                                {{-- <div class="columns">
-                                    <div class="column is-6">
-                                        <div class="field">
-                                            <label class="label">Start Date</label>
-
-                                            <div class="control">
-                                                <textarea class="input" placeholder="Event date" name="start_time"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="column is-6">
-                                        <div class="field">
-                                            <label class="label">Description</label>
-
-                                            <div class="control">
-                                                <textarea class="textarea" placeholder="Event description" name="decription"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
 
                                 <div class="field">
                                     <label class="label">Price</label>
@@ -177,6 +132,30 @@
                                     </div>
                                 </div>
 
+                                <div class="field">
+                                    <label class="label">Categories</label>
+
+                                    <div class="control">
+                                        <div class="select is-fullwidth is-multiple{{ $errors->has('categories') ? ' is-danger' : '' }}">
+                                            <select name="categories[]" multiple id="category-opt" required>
+                                                {{-- <option>Select category</option> --}}
+
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}">
+                                                        {{ ucfirst($category->name) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    @if ($errors->has('categories'))
+                                        <p class="help is-danger">
+                                            {{ $errors->first('categories') }}
+                                        </p>
+                                    @endif
+                                </div>
+
                                 <div class="field m-t-lg">
                                     <div class="control">
                                         <button type="submit" class="button is-link">Submit</button>
@@ -196,4 +175,14 @@
     <script src="{{ asset('js/autocomplete.js') }}"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API') }}&libraries=places&callback=initAutocomplete" async defer></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+    <script>
+        $('#category-opt').select2();
+    </script>
+@endsection
+
+@section('css')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 @endsection
