@@ -9,8 +9,35 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import VueModal from 'vue-js-modal';
+import * as VueGoogleMaps from 'vue2-google-maps';
 
 Vue.use(VueModal, { dynamic: true, injectModalsContainer: true });
+
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: process.env.MIX_GOOGLE_MAPS_API,
+        libraries: 'places', // This is required if you use the Autocomplete plugin
+        // OR: libraries: 'places,drawing'
+        // OR: libraries: 'places,drawing,visualization'
+        // (as you require)
+
+        //// If you want to set the version, you can do so:
+        // v: '3.26',
+    },
+
+    //// If you intend to programmatically custom event listener code
+    //// (e.g. `this.$refs.gmap.$on('zoom_changed', someFunc)`)
+    //// instead of going through Vue templates (e.g. `<GmapMap @zoom_changed="someFunc">`)
+    //// you might need to turn this on.
+    // autobindAllEvents: false,
+
+    //// If you want to manually install components, e.g.
+    //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
+    //// Vue.component('GmapMarker', GmapMarker)
+    //// then disable the following:
+    // installComponents: true,
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -29,6 +56,7 @@ Vue.component(
 
 Vue.component('login-modal', require('./components/AuthModal.vue').default);
 Vue.component('bookmark', require('./components/BookmarkButton.vue').default);
+Vue.component('google-maps', require('./components/GoogleMap.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

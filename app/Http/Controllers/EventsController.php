@@ -24,7 +24,7 @@ class EventsController extends Controller
      */
     public function index()
     {
-        $events = (new Event)->getUpcomingEvents(3);
+        $events = (new Event)->getFeaturedEvents(3);
 
         return view('welcome', compact('events'));
     }

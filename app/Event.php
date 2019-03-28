@@ -104,6 +104,11 @@ class Event extends Model
             ->get();
     }
 
+    public function getFeaturedEvents($limit = 5)
+    {
+        return dd($this->bookmarks);
+    }
+
     public function getFormattedPriceAttribute()
     {
         return $this->price > 0 ? '&#8358; ' . number_format($this->price / 100) : 'Free';

@@ -9,7 +9,14 @@ class SearchController extends Controller
 {
     public function index(Request $request)
     {
-        $events = Event::with('category')->filter($request)->get();
+        // if (request()->has('q')) {
+        //     // dd(request()->query('q'));
+        //     $query = request()->query('q');
+        //     return Event::where('title', 'ilike', "%{$query}%")
+        //         ->orWhere('address', 'ilike', "%{$query}%")->get();
+        // }
+
+        $events = Event::with('categories')->filter($request)->get();
 
         return response()->json($events, 200);
     }
