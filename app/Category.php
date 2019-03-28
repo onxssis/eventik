@@ -13,7 +13,7 @@ class Category extends Model
         parent::boot();
 
         static::saving(function ($model) {
-            $model->slug = str_slug($model->name);
+            $model->slug = static::makeSlugFromTitle($model->name);
         });
     }
 
@@ -25,5 +25,20 @@ class Category extends Model
     public function events()
     {
         return $this->belongsToMany(Event::class);
+    }
+
+    protected static function makeSlugFromTitle($title)
+    {
+        $slug = str_slug($title);
+
+        $query = Event::whereRaw("slug ~ '^{$slug}(-[0-9]+)?$'");
+
+        if (app()->environment() === 'testing') {
+            $query = Event::whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$'");
+        }
+
+        $count = $query->count();
+
+        return $count ? "{$slug}-{$count}" : $slug;
     }
 }

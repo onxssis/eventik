@@ -7,13 +7,9 @@ use App\Event;
 
 class SearchController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        if (request()->has('q')) {
-            dd('yes');
-        }
-
-        $events = Event::with('categories')->get();
+        $events = Event::with('category')->filter($request)->get();
 
         return response()->json($events, 200);
     }
