@@ -13,7 +13,7 @@ class SearchController extends Controller
             dd('yes');
         }
 
-        $events = Event::with('category')->get();
+        $events = Event::with('categories')->get();
 
         return response()->json($events, 200);
     }
