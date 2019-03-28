@@ -1,4 +1,4 @@
-<login-modal inline-template>
+<login-modal inline-template v-cloak>
     <modal name="login" transition="pop-out" :classes="['box']" height="auto">
 
         <header class="modal--header">
@@ -41,4 +41,4 @@
             </div>
         </form>
     </modal>
-</login-modal>
+</login-modal> 

@@ -106,7 +106,11 @@ class Event extends Model
 
     public function getFeaturedEvents($limit = 5)
     {
-        return dd($this->bookmarks);
+        return $this->whereHas('bookmarks')
+            ->orWhereHas('reservations')
+            ->limit($limit)
+            // ->orderBy('start_date', 'desc')
+            ->get()->shuffle();
     }
 
     public function getFormattedPriceAttribute()

@@ -10,6 +10,6 @@ class EventFilters extends FiltersAbstract
     protected $filters = [
         'access' => AccessFilter::class,
         'cat' => CategoryFilter::class,
-        // 'q' => QueryFilter::class,
+        'q' => QueryFilter::class,
     ];
 }

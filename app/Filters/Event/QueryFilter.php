@@ -10,7 +10,6 @@ class QueryFilter extends SingleFilterAbstract
 {
     public function filter(Builder $builder, $key)
     {
-        return $builder->where('title', 'ILIKE', "%{$key}%")
-            ->orWhere('address', 'ILIKE', "%{$key}%");
+        return $builder->where('title', 'ilike', "%{$key}%");
     }
 }

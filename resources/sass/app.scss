@@ -15,8 +15,21 @@
 @import 'components/searchbar';
 @import 'components/modal';
 
+[v-cloak] {
+    display: none;
+}
+
 .evn-navigation {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.card a {
+    color: inherit;
+}
+
+.card-image img {
+    border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
 }
 
 .login-button {
