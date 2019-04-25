@@ -53,10 +53,10 @@ Vue.component(
     'attend-event',
     require('./components/AttendEventButton.vue').default
 );
-
 Vue.component('login-modal', require('./components/AuthModal.vue').default);
 Vue.component('bookmark', require('./components/BookmarkButton.vue').default);
 Vue.component('google-maps', require('./components/GoogleMap.vue').default);
+Vue.component('browse', require('./components/Browse.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

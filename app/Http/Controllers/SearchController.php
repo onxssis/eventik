@@ -18,6 +18,7 @@ class SearchController extends Controller
 
         $events = Event::with('categories')->filter($request)->get();
 
-        return response()->json($events, 200);
+        // return response()->json($events, 200);
+        return view('events.browse', compact('events'));
     }
 }
