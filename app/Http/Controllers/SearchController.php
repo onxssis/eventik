@@ -16,7 +16,7 @@ class SearchController extends Controller
         //         ->orWhere('address', 'ilike', "%{$query}%")->get();
         // }
 
-        $events = Event::with('categories')->filter($request)->get();
+        $events = Event::with('categories')->filter($request)->paginate(3);
 
         // return response()->json($events, 200);
         return view('events.browse', compact('events'));
