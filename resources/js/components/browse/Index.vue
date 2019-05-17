@@ -8,19 +8,9 @@
 
     <main class="browse-main">
       <div class="filter-input">
-        <svg
-          width="24"
-          height="24"
-          xmlns="http://www.w3.org/2000/svg"
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-        >
-          <path
-            d="M15.853 16.56c-1.683 1.517-3.911 2.44-6.353 2.44-5.243 0-9.5-4.257-9.5-9.5s4.257-9.5 9.5-9.5 9.5 4.257 9.5 9.5c0 2.442-.923 4.67-2.44 6.353l7.44 7.44-.707.707-7.44-7.44zm-6.353-15.56c4.691 0 8.5 3.809 8.5 8.5s-3.809 8.5-8.5 8.5-8.5-3.809-8.5-8.5 3.809-8.5 8.5-8.5z"
-          ></path>
-        </svg>
+        <search-icon></search-icon>
 
-        <input type="text" placeholder="Filter Search">
+        <input type="text" placeholder="Filter Search" v-model="searchFilter">
 
         <div class="focus-line"></div>
       </div>
@@ -28,14 +18,14 @@
       <div class="events-grid">
         <spinner class="spinner center" v-if="loading"></spinner>
 
-        <h2 class="empty center" v-if="!events.length">No results</h2>
+        <h2 class="empty center" v-if="!filteredEvents.length">No results</h2>
 
         <a href>
-          <event v-for="event in events" :event="event" :key="event.id" v-show="!loading"></event>
+          <event v-for="event in filteredEvents" :event="event" :key="event.id" v-show="!loading"></event>
         </a>
       </div>
 
-      <pagination v-if="events.length" :meta="paginationMeta"></pagination>
+      <pagination v-if="filteredEvents.length" :meta="paginationMeta"></pagination>
     </main>
   </div>
 </template>
@@ -45,20 +35,23 @@ import Event from "./Event";
 import Filters from "./Filter";
 import Pagination from "../pagination/Pagination";
 import Spinner from "./Spinner";
+import SearchIcon from "./SearchIcon";
 
 export default {
   components: {
     Event,
     Pagination,
     Spinner,
-    Filters
+    Filters,
+    SearchIcon
   },
   data() {
     return {
       events: [],
       loading: false,
       paginationMeta: null,
-      filterOpen: false
+      filterOpen: false,
+      searchFilter: ""
     };
   },
   mounted() {
@@ -81,6 +74,17 @@ export default {
         });
     }
   },
+  computed: {
+    filteredEvents() {
+      const searchQuery = this.searchFilter.toLowerCase().trim();
+
+      if (!searchQuery) return this.events;
+
+      return this.events.filter(event =>
+        event.title.toLowerCase().includes(searchQuery)
+      );
+    }
+  },
   watch: {
     "$route.query": function(query) {
       this.fetchEvents(1, query);
@@ -95,7 +99,6 @@ export default {
   .browse {
     display: grid;
     grid-template-columns: 33% 1fr;
-    // grid-gap: 20px;
   }
 }
 

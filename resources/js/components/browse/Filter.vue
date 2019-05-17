@@ -1,7 +1,7 @@
 <template>
   <aside class="browse-aside">
     <div class="tag-filters" :class="filterOpenClass">
-      <button class="close" @click="$emit('filter:close')">Close</button>
+      <button class="close" @click="closeFilter">Close</button>
 
       <h5>Filter by Access:</h5>
       <ul>
@@ -82,17 +82,20 @@ export default {
       });
 
       this.updateQueryString();
-
-      this.$emit("filter:close");
+      this.closeFilter();
     },
     clearFilter(key) {
       this.selectedFilters = _.omit(this.selectedFilters, [key]);
+
       this.updateQueryString();
-      this.$emit("filter:close");
+      this.closeFilter();
     },
     clearFilters() {
       this.selectedFilters = {};
       this.updateQueryString();
+    },
+    closeFilter() {
+      this.$emit("filter:close");
     },
     updateQueryString() {
       this.$router.replace({
