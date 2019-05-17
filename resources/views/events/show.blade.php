@@ -3,7 +3,8 @@
 @section('content')
 
 <section class="show-event">
-    <img src="{{ asset('storage/' . $event->image) }}" alt="blurred bg" class="blurred-bg-img is-hidden-mobile" style="border-bottom: 1px solid black;">
+    <img src="{{ asset('storage/' . $event->image) }}" alt="blurred bg" class="blurred-bg-img is-hidden-mobile"
+        style="border-bottom: 1px solid black;">
     <div class="container">
 
         <header class="m-t-lg event-head has-background-white p-b-lg">
@@ -58,11 +59,15 @@
                         </span>
                     </a>
 
-                    <bookmark :bookmarked="{{ json_encode($event->isBookmarked) }}" :id="{{ $event->id }}"></bookmark>
+                    <bookmark :bookmarked="{{ json_encode($event->isBookmarked) }}" :id="{{ $event->id }}"
+                        :auth="{{ json_encode(Auth::check()) }}">
+                    </bookmark>
                 </div>
 
                 <div>
-                    <attend-event :active="{{ json_encode($event->isAttending) }}" :event-id="{{ $event->id }}"></attend-event>
+                    <attend-event :active="{{ json_encode($event->isAttending) }}" :event-id="{{ $event->id }}"
+                        :auth="{{ json_encode(Auth::check()) }}">
+                    </attend-event>
                 </div>
             </div>
 
@@ -94,7 +99,11 @@
                                     <p>Sat, July 20, 2019</p>
                                     <p>8:00 AM – 4:00 PM WAT</p>
                                     <p class="hide-small hide-medium">
-                                        <a class="js-add-to-calendar-modal js-d-dialog-trigger" href="#add-to-calendar-modal" data-automation="add-to-calendar" role="button" aria-haspopup="true" dorsal-guid="4e221c02-457d-7c00-e435-a9567aa434e1" data-xd-wired="dialog-trigger">Add to Calendar</a>
+                                        <a class="js-add-to-calendar-modal js-d-dialog-trigger"
+                                            href="#add-to-calendar-modal" data-automation="add-to-calendar"
+                                            role="button" aria-haspopup="true"
+                                            dorsal-guid="4e221c02-457d-7c00-e435-a9567aa434e1"
+                                            data-xd-wired="dialog-trigger">Add to Calendar</a>
                                     </p>
                                 </time>
                             </div>
@@ -124,7 +133,8 @@
                     <div class="is-flex">
                         <span class="fa-layers fa-3x m-r-xs" style="color: #f05537">
                             <i class="fa fa-circle"></i>
-                            <i class="fab fa-facebook-f fa-inverse" data-fa-transform="shrink-3.5 down-1.6 right-1.25"></i>
+                            <i class="fab fa-facebook-f fa-inverse"
+                                data-fa-transform="shrink-3.5 down-1.6 right-1.25"></i>
                         </span>
 
                         <span class="fa-layers fa-3x m-r-xs" style="color: #f05537">
@@ -160,4 +170,4 @@
 
     </div>
 </section>
-@endsection 
+@endsection

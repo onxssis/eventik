@@ -10,6 +10,9 @@ window.Vue = require('vue');
 
 import VueModal from 'vue-js-modal';
 import * as VueGoogleMaps from 'vue2-google-maps';
+import VueRouter from 'vue-router';
+
+Vue.use(VueRouter);
 
 Vue.use(VueModal, { dynamic: true, injectModalsContainer: true });
 
@@ -58,15 +61,19 @@ Vue.component('bookmark', require('./components/BookmarkButton.vue').default);
 Vue.component('google-maps', require('./components/GoogleMap.vue').default);
 Vue.component('browse', require('./components/Browse.vue').default);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+const BrowseIndex = require('./components/browse/Index.vue').default;
+
+const routes = [{ path: '/b', component: BrowseIndex, name: 'browse.index' }];
+
+const router = new VueRouter({
+    mode: 'history',
+    routes,
+});
 
 const app = new Vue({
     el: '#app',
-    data: window.App,
+    router,
+    // data: window.App,
 });
 
 $('input.search-bar').on('click', function() {

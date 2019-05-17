@@ -9,11 +9,11 @@
 
 <script>
 export default {
-  props: ["active", "eventId"],
+  props: ["active", "eventId", "auth"],
   data() {
     return {
       isActive: this.active,
-      isAuth: this.$root.authenticated
+      isAuth: this.auth
     };
   },
   computed: {

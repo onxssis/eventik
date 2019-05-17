@@ -12,7 +12,7 @@ class Event extends Model
 {
     protected $guarded = [];
 
-    protected $appends = ['formattedPrice', 'isAttending', 'isBookmarked'];
+    protected $appends = ['formattedPrice', 'isAttending', 'isBookmarked', 'formattedStartDate'];
 
     protected $withCount = ['bookmarks', 'reservations'];
     // protected $with = [''];
@@ -143,8 +143,8 @@ class Event extends Model
         $this->attributes['end_date'] = $value;
     }
 
-    // public function getStartDateAttribute()
-    // {
-    //     return $this->start_date->format('');
-    // }
+    public function getFormattedStartDateAttribute()
+    {
+        return $this->start_date->toDayDateTimeString();
+    }
 }

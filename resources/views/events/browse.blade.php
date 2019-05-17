@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-<browse inline-template v-cloak :events="{{ $events }}">
+<browse inline-template v-cloak>
     {{--
     <div class="container"> --}}
     <div class="browse">
@@ -57,7 +57,7 @@
             </div>
 
             <div class="events-grid">
-                @foreach ($events as $event)
+                {{-- @foreach ($events as $event) --}}
                 <a href="">
                     <article>
                         <div class="cont">
@@ -95,7 +95,7 @@
                         </div>
                     </article>
                 </a>
-                @endforeach
+                {{-- @endforeach --}}
             </div>
         </main>
     </div>

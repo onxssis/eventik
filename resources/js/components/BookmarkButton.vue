@@ -8,9 +8,10 @@
 
 <script>
 export default {
-  props: ["bookmarked", "id"],
+  props: ["bookmarked", "id", "auth"],
   data() {
     return {
+      isAuth: this.auth,
       isBookmarked: this.bookmarked
     };
   },
@@ -28,7 +29,7 @@ export default {
   },
   methods: {
     toggle() {
-      if (!this.$root.authenticated) return this.$modal.show("login");
+      if (!this.isAuth) return this.$modal.show("login");
 
       let method = this.isBookmarked ? "delete" : "post";
 

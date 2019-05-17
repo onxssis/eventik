@@ -30,6 +30,8 @@
 .card-image img {
     border-top-left-radius: 11px;
     border-top-right-radius: 11px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .login-button {

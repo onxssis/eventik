@@ -13,8 +13,6 @@
 
 Route::get('/', 'EventsController@index')->name('welcome');
 
-Route::get('/b', 'SearchController@index');
-
 Route::post('/events/{id}/bookmark', 'BookmarksController@store')
     ->name('bookmarks.store');
 
@@ -34,3 +32,12 @@ Route::resource('events', 'EventsController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/b', function () {
+    return view('browse.index');
+});
+
+Route::group(['prefix' => '/api'], function () {
+    Route::get('/b', 'Api\\SearchController@index');
+    Route::get('/b/filters', 'Api\\SearchController@filters');
+});
