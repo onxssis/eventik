@@ -2,10 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Filters\Event\EventFilters;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filters\Event\EventFilters;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class Event extends Model
@@ -63,30 +63,17 @@ class Event extends Model
     {
         $user = $user ?: auth()->user();
 
-        return !!$this->bookmarks()->where('user_id', $user->id)
-            ->first();
+        return (bool) $this->bookmarks()->where('user_id', $user->id)
+            ->first()
+        ;
     }
 
     public function getIsBookmarkedAttribute()
     {
         return $this->bookmarks()
             ->where('user_id', auth()->id())
-            ->exists();
-    }
-
-    protected static function makeSlugFromTitle($title)
-    {
-        $slug = str_slug($title);
-
-        $query = Event::whereRaw("slug ~ '^{$slug}(-[0-9]+)?$'");
-
-        if (app()->environment() === 'testing') {
-            $query = Event::whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$'");
-        }
-
-        $count = $query->count();
-
-        return $count ? "{$slug}-{$count}" : $slug;
+            ->exists()
+        ;
     }
 
     public function getRouteKeyName()
@@ -101,7 +88,8 @@ class Event extends Model
         return $this->where('start_date', '>', $today)
             ->limit($limit)
             ->orderBy('start_date', 'desc')
-            ->get();
+            ->get()
+        ;
     }
 
     public function getFeaturedEvents($limit = 5)
@@ -115,19 +103,20 @@ class Event extends Model
 
     public function getFormattedPriceAttribute()
     {
-        return $this->price > 0 ? '&#8358; ' . number_format($this->price / 100) : 'Free';
+        return $this->price > 0 ? '&#8358; '.number_format($this->price / 100) : 'Free';
     }
 
     public function getIsAttendingAttribute()
     {
         return $this->reservations()
             ->where('user_id', auth()->id())
-            ->exists();
+            ->exists()
+        ;
     }
 
     public function setStartDateAttribute($value)
     {
-        if (app()->environment() !== 'testing') {
+        if ('testing' !== app()->environment()) {
             $this->attributes['start_date'] = Carbon::createFromFormat('Y-m-d\TH:i', $value);
         }
 
@@ -136,7 +125,7 @@ class Event extends Model
 
     public function setEndDateAttribute($value)
     {
-        if (app()->environment() !== 'testing') {
+        if ('testing' !== app()->environment()) {
             $this->attributes['end_date'] = Carbon::createFromFormat('Y-m-d\TH:i', $value);
         }
 
@@ -146,5 +135,20 @@ class Event extends Model
     public function getFormattedStartDateAttribute()
     {
         return $this->start_date->toDayDateTimeString();
+    }
+
+    protected static function makeSlugFromTitle($title)
+    {
+        $slug = str_slug($title);
+
+        $query = Event::whereRaw("slug ~ '^{$slug}(-[0-9]+)?$'");
+
+        if ('testing' === app()->environment()) {
+            $query = Event::whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$'");
+        }
+
+        $count = $query->count();
+
+        return $count ? "{$slug}-{$count}" : $slug;
     }
 }

@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Event;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreEvent;
 use App\Http\Requests\UpdateEvent;
-use App\Category;
+use Illuminate\Http\Request;
 
 class EventsController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth')->except(['show', 'index']);
@@ -24,7 +22,7 @@ class EventsController extends Controller
      */
     public function index()
     {
-        $events = (new Event)->getFeaturedEvents(3);
+        $events = (new Event())->getUpcomingEvents(3);
 
         return view('welcome', compact('events'));
     }
@@ -44,7 +42,8 @@ class EventsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(StoreEvent $request)
@@ -57,6 +56,7 @@ class EventsController extends Controller
      * Display the specified resource.
      *
      * @param  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Event $event)
@@ -68,18 +68,19 @@ class EventsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @param  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateEvent $request, Event $event)
@@ -91,7 +92,9 @@ class EventsController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @param \App\Event $event
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Event $event)

@@ -3,7 +3,7 @@
 @section('content')
 
 <section class="show-event">
-    <img src="{{ asset('storage/' . $event->image) }}" alt="blurred bg" class="blurred-bg-img is-hidden-mobile"
+    <img src="{{ $event->image }}" alt="blurred bg" class="blurred-bg-img is-hidden-mobile"
         style="border-bottom: 1px solid black;">
     <div class="container">
 
@@ -14,7 +14,7 @@
                 <div class="column is-8 p-b-none p-t-none p-r-none">
 
                     <figure>
-                        <img class="image" src="{{ asset('storage/' . $event->image) }}" alt="" style="height: 100%">
+                        <img class="image" src="{{ $event->image }}" alt="" style="height: 100%">
                     </figure>
 
                 </div>

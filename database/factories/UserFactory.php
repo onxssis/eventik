@@ -1,7 +1,6 @@
 <?php
 
 use Faker\Generator as Faker;
-use Illuminate\Http\UploadedFile;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +31,6 @@ $factory->define(App\Category::class, function (Faker $faker) {
 });
 
 $factory->define(App\Event::class, function (Faker $faker) {
-
     $title = $faker->sentence();
 
     $start_date = \Carbon\Carbon::now()->addDays(4);
@@ -50,9 +48,9 @@ $factory->define(App\Event::class, function (Faker $faker) {
         'address' => $faker->address,
         'longitude' => $faker->longitude,
         'latitude' => $faker->latitude,
-        'start_date' => $start_date->toDateTimeString(),
-        'end_date' => $end_date->toDateTimeString(),
-        'image' => $faker->imageUrl(),
-        'thumbnail' => $faker->imageUrl(),
+        'start_date' => $start_date->format('Y-m-d\TH:i'),
+        'end_date' => $end_date->format('Y-m-d\TH:i'),
+        'image' => explode('?', $faker->imageUrl())[0],
+        'thumbnail' => explode('?', $faker->imageUrl())[0],
     ];
 });
