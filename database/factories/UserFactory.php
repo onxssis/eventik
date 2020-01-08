@@ -48,8 +48,8 @@ $factory->define(App\Event::class, function (Faker $faker) {
         'address' => $faker->address,
         'longitude' => $faker->longitude,
         'latitude' => $faker->latitude,
-        'start_date' => $start_date->format('Y-m-d\TH:i'),
-        'end_date' => $end_date->format('Y-m-d\TH:i'),
+        'start_date' => $start_date->format('Y-m-d H:i:s'),
+        'end_date' => $end_date->format('Y-m-d H:i:s'),
         'image' => explode('?', $faker->imageUrl())[0],
         'thumbnail' => explode('?', $faker->imageUrl())[0],
     ];

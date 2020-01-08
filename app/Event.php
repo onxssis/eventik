@@ -3,10 +3,12 @@
 namespace App;
 
 use App\Filters\Event\EventFilters;
+use App\Helpers\Slug;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
 {
@@ -23,8 +25,10 @@ class Event extends Model
     {
         parent::boot();
 
-        static::saving(function ($model) {
-            $model->slug = static::makeSlugFromTitle($model->title);
+        $slug = new Slug();
+
+        static::saving(function ($model) use ($slug) {
+            $model->slug = $slug->createSlug($model->title);
         });
 
         static::deleting(function ($model) {
@@ -116,39 +120,16 @@ class Event extends Model
 
     public function setStartDateAttribute($value)
     {
-        if ('testing' !== app()->environment()) {
-            $this->attributes['start_date'] = Carbon::createFromFormat('Y-m-d\TH:i', $value);
-        }
-
         $this->attributes['start_date'] = $value;
     }
 
     public function setEndDateAttribute($value)
     {
-        if ('testing' !== app()->environment()) {
-            $this->attributes['end_date'] = Carbon::createFromFormat('Y-m-d\TH:i', $value);
-        }
-
         $this->attributes['end_date'] = $value;
     }
 
     public function getFormattedStartDateAttribute()
     {
         return $this->start_date->toDayDateTimeString();
-    }
-
-    protected static function makeSlugFromTitle($title)
-    {
-        $slug = str_slug($title);
-
-        $query = Event::whereRaw("slug ~ '^{$slug}(-[0-9]+)?$'");
-
-        if ('testing' === app()->environment()) {
-            $query = Event::whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$'");
-        }
-
-        $count = $query->count();
-
-        return $count ? "{$slug}-{$count}" : $slug;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\Slug;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -12,8 +13,10 @@ class Category extends Model
     {
         parent::boot();
 
-        static::saving(function ($model) {
-            $model->slug = static::makeSlugFromTitle($model->name);
+        $slug = new Slug();
+
+        static::saving(function ($model) use ($slug) {
+            $model->slug = $slug->createSlug($model->title);
         });
     }
 
@@ -25,20 +28,5 @@ class Category extends Model
     public function events()
     {
         return $this->belongsToMany(Event::class);
-    }
-
-    protected static function makeSlugFromTitle($title)
-    {
-        $slug = str_slug($title);
-
-        $query = Event::whereRaw("slug ~ '^{$slug}(-[0-9]+)?$'");
-
-        if (app()->environment() === 'testing') {
-            $query = Event::whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$'");
-        }
-
-        $count = $query->count();
-
-        return $count ? "{$slug}-{$count}" : $slug;
     }
 }
