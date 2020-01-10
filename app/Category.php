@@ -16,7 +16,7 @@ class Category extends Model
         $slug = new Slug();
 
         static::saving(function ($model) use ($slug) {
-            $model->slug = $slug->createSlug($model->title);
+            $model->slug = $slug->createSlug($model->name);
         });
     }
 

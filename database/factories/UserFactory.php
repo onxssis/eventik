@@ -27,6 +27,7 @@ $factory->define(App\User::class, function (Faker $faker) {
 $factory->define(App\Category::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
+        'image' => explode('?', $faker->imageUrl())[0],
     ];
 });
 
