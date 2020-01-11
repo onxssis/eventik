@@ -14,6 +14,7 @@
 @import "components/card";
 @import "components/searchbar";
 @import "components/modal";
+@import "components/categories";
 
 [v-cloak] {
     display: none;
@@ -27,9 +28,11 @@
     color: inherit;
 }
 
+.card-image {
+    height: 100%;
+}
+
 .card-image img {
-    border-top-left-radius: 11px;
-    border-top-right-radius: 11px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
@@ -190,6 +193,7 @@ main {
     color: #363636;
     max-width: 100%;
     width: 100%;
+    border-color: #d2d2d2;
 }
 
 .input.search-bar {

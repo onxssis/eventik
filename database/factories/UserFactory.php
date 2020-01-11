@@ -27,7 +27,7 @@ $factory->define(App\User::class, function (Faker $faker) {
 $factory->define(App\Category::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
-        'image' => explode('?', $faker->imageUrl())[0],
+        'image' => str_replace('lorempixel.com', 'picsum.photos', explode('?', $faker->imageUrl())[0]),
     ];
 });
 
@@ -51,7 +51,7 @@ $factory->define(App\Event::class, function (Faker $faker) {
         'latitude' => $faker->latitude,
         'start_date' => $start_date->format('Y-m-d H:i:s'),
         'end_date' => $end_date->format('Y-m-d H:i:s'),
-        'image' => explode('?', $faker->imageUrl())[0],
-        'thumbnail' => explode('?', $faker->imageUrl())[0],
+        'image' => str_replace('lorempixel.com', 'picsum.photos', explode('?', $faker->imageUrl())[0]),
+        'thumbnail' => str_replace('lorempixel.com', 'picsum.photos', explode('?', $faker->imageUrl())[0]),
     ];
 });

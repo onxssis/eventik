@@ -1,11 +1,8 @@
 <template>
   <article>
     <div class="cont">
-      <div class="img-hold">
-        <img
-          src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F56927247%2F2581145421%2F1%2Foriginal.20190216-200149?w=512&auto=compress&rect=0%2C0%2C2160%2C1080&s=acea6956bc433ee106e7096e703ef139"
-          alt
-        >
+      <div class="img-hold" :style="eventImgStyles">
+        <!-- <img :src="event.image" :alt="event.title" /> -->
         <div class="free" v-if="free">Free</div>
       </div>
       <div class="aside">
@@ -15,13 +12,13 @@
           <p>{{ event.address }}</p>
           <p v-html="event.formattedPrice"></p>
         </div>
-        <div class="buttons">
+        <div class="button-container">
           <div>
-            <ShareButton/>
+            <ShareButton />
           </div>
 
           <div>
-            <LikeButton/>
+            <LikeButton />
           </div>
         </div>
       </div>
@@ -47,7 +44,30 @@ export default {
   computed: {
     free() {
       return this.event.formattedPrice === "Free";
+    },
+    eventImgStyles() {
+      return {
+        backgroundImage: `url(${this.event.image})`
+      };
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.button-container {
+  display: flex;
+  justify-self: end;
+
+  > div:first-child {
+    margin-right: 2em;
+  }
+}
+
+.img-hold {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 6px;
+}
+</style>

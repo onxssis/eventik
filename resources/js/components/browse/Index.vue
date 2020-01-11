@@ -1,32 +1,41 @@
 <template>
-  <div class="browse">
-    <div class="mobile-filter" @click="filterOpen = !filterOpen">
-      <p>show filters</p>
+  <div class="row">
+    <div class="container is-fluid">
+      <div class="browse">
+        <div class="mobile-filter" @click="filterOpen = !filterOpen">
+          <p>show filters</p>
+        </div>
+
+        <filters endpoint="/api/b/filters" :open="filterOpen" @filter:close="filterOpen = false"></filters>
+
+        <main class="browse-main">
+          <div class="filter-input">
+            <search-icon></search-icon>
+
+            <input type="text" placeholder="Filter Search" v-model="searchFilter" />
+
+            <div class="focus-line"></div>
+          </div>
+
+          <div class="events-grid">
+            <spinner class="spinner center" v-if="loading"></spinner>
+
+            <h2 class="empty center" v-if="!filteredEvents.length">No results</h2>
+
+            <a href>
+              <event
+                v-for="event in filteredEvents"
+                :event="event"
+                :key="event.id"
+                v-show="!loading"
+              ></event>
+            </a>
+          </div>
+
+          <pagination v-if="filteredEvents.length" :meta="paginationMeta"></pagination>
+        </main>
+      </div>
     </div>
-
-    <filters endpoint="/api/b/filters" :open="filterOpen" @filter:close="filterOpen = false"></filters>
-
-    <main class="browse-main">
-      <div class="filter-input">
-        <search-icon></search-icon>
-
-        <input type="text" placeholder="Filter Search" v-model="searchFilter">
-
-        <div class="focus-line"></div>
-      </div>
-
-      <div class="events-grid">
-        <spinner class="spinner center" v-if="loading"></spinner>
-
-        <h2 class="empty center" v-if="!filteredEvents.length">No results</h2>
-
-        <a href>
-          <event v-for="event in filteredEvents" :event="event" :key="event.id" v-show="!loading"></event>
-        </a>
-      </div>
-
-      <pagination v-if="filteredEvents.length" :meta="paginationMeta"></pagination>
-    </main>
   </div>
 </template>
 
@@ -167,12 +176,12 @@ export default {
       rgba(0, 0, 0, 0.22) 0px 15px 12px;
     padding: 60px 20px;
     transition: all 0.5s ease 0s;
-  }
 
-  .tag-filters.open {
-    transform: translate3d(0px, 0px, 0px);
-    opacity: 1;
-    transition: all 0.5s ease 0s;
+    &.open {
+      transform: translate3d(0px, 0px, 0px);
+      opacity: 1;
+      transition: all 0.5s ease 0s;
+    }
   }
 }
 
@@ -287,14 +296,16 @@ article:hover {
 
 img {
   width: 100%;
+  height: 100%;
   border-radius: 6px;
 }
 
 .cont {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 150px;
   grid-gap: 20px;
-  padding: 10px;
+  padding: 20px;
   width: 100%;
 }
 
@@ -342,6 +353,21 @@ img {
     grid-gap: 20px;
     padding: 10px;
     width: 100%;
+  }
+
+  .container {
+    &.is-fluid {
+      padding-right: 0 !important;
+      padding-left: 0 !important;
+    }
+  }
+}
+
+@media (max-width: 1980px) and (min-width: 1024px) {
+  .tag-filters {
+    button.close {
+      display: none;
+    }
   }
 }
 </style>
