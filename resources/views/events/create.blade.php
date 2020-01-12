@@ -72,8 +72,11 @@
                             <label class="label">Start date and Time</label>
 
                             <div class="control">
-                                <input class="input{{ $errors->has('start_date') ? ' is-danger' : '' }}"
-                                    type="datetime-local" placeholder="Event date" name="start_date" required />
+                                <datetime input-class="input{{ $errors->has('start_date') ? ' is-danger' : '' }}"
+                                    class="theme-orange" placeholder="Select Date and Time" id="start_date" required
+                                    use12-hour :min-datetime="(new Date).toISOString()" :week-start="7"
+                                    name="start_date" format="yyyy-MM-dd HH:mm:ss" type="datetime">
+                                </datetime>
                             </div>
 
                             @if ($errors->has('start_date'))
@@ -87,9 +90,11 @@
                             <label class="label">End date and Time</label>
 
                             <div class="control">
-                                {{-- <input class="input{{ $errors->has('end_date') ? ' is-danger' : '' }}"
-                                type="datetime-local" placeholder="Event date" name="end_date" required /> --}}
-                                <datetime class="input{{ $errors->has('end_date') ? ' is-danger' : '' }}"></datetime>
+                                <datetime input-class="input{{ $errors->has('end_date') ? ' is-danger' : '' }}"
+                                    class="theme-orange" placeholder="Select Date and Time" id="end_date" use12-hour
+                                    :min-datetime="(new Date).toISOString()" name="end_date" :week-start="7"
+                                    format="yyyy-MM-dd HH:mm:ss" required type="datetime">
+                                </datetime>
                             </div>
 
                             @if ($errors->has('end_date'))

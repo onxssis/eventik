@@ -6,7 +6,6 @@ use App\Category;
 use App\Event;
 use App\Http\Requests\StoreEvent;
 use App\Http\Requests\UpdateEvent;
-use Illuminate\Http\Request;
 
 class EventsController extends Controller
 {
@@ -92,8 +91,6 @@ class EventsController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param \App\Event $event
      *
      * @return \Illuminate\Http\Response
      */
