@@ -1,8 +1,8 @@
-<section class="section">
+<section class="section" style="background: #f9f9f9;">
   <div class="container">
-    <h1 class="title has-text-centered">Browse By Category</h1>
+    <h1 class="title is-4">Browse By Category</h1>
 
-    <div class="columns">
+    <div class="columns" style="position: relative;">
       <div class="category-wrapper">
 
         @foreach ($categories as $category)

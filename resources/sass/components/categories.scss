@@ -9,4 +9,21 @@
     &::-webkit-scrollbar {
         display: none;
     }
+
+    &::after {
+        content: "";
+        width: 60px;
+        background: #fff;
+        background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0) 0%,
+            #f9f9f9 100%
+        );
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
 }

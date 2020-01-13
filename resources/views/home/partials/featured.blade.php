@@ -1,18 +1,18 @@
 <section class="section">
     <div class="container">
-        <h1 class="title has-text-centered">Upcoming Events</h1>
+        <h1 class="title is-4">Upcoming Events</h1>
 
         <div class="columns">
             @foreach ($events as $event)
 
-            <div class="column is-4">
+            <div class="column is-3">
                 <div class="card featured-card is-horizontal">
-                    <div class="card-image">
+                    {{-- <a href="{{ route('events.show', $event->slug) }}"> --}}
+                    <div class="card-image" style="background: url('{{ $event->image }}');">
+                        <div class="card-image-cast"></div>
                         {{-- <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F36851225%2F199130051817%2F1%2Foriginal.jpg?w=800&rect=0%2C132%2C1586%2C793&s=a81d8dd23f122c65ae3497d2dc95b528" alt=""> --}}
-                        <a href="{{ route('events.show', $event->slug) }}">
-                            <img src="{{ $event->image }}" alt="">
-                        </a>
                     </div>
+                    {{-- </a> --}}
 
                     <div class="card-content">
                         <div class="featured-card__meta">

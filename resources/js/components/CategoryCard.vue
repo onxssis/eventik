@@ -48,7 +48,7 @@ export default {
   flex: 0 0 340px;
   margin: 10px auto;
   background: #333;
-  border-radius: 10px !important;
+  border-radius: 6px !important;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.66) 0 0px 15px 0, inset #333 0 0 0 5px,
     inset rgba(255, 255, 255, 0.5) 0 0 0 6px;

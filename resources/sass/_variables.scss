@@ -31,12 +31,12 @@ $beige-light: #d0d1cd;
 $beige-lighter: #eff0eb;
 
 // Update Bulma's global variables
-$family-sans-serif: 'Nunito', sans-serif;
+$family-sans-serif: "Montserrat", sans-serif;
 // $grey-dark: $brown;
 // $grey-light: $beige-light;
 // $primary: $purple;
-$widescreen-enabled: false;
-$fullhd-enabled: false;
+$widescreen-enabled: true;
+$fullhd-enabled: true;
 
 // Update some of Bulma's component variables
 // $body-background-color: $beige-lighter;

@@ -22,7 +22,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('home.partials.category', function (ViewView $view) {
-            $categories = Category::all();
+            $categories = Category::inRandomOrder()->get();
 
             return $view->with(compact('categories'));
         });

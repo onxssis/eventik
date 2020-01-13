@@ -12,7 +12,26 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $events = factory(Event::class, 70)->create();
-        $categories = factory(Category::class, 15)->create();
+        $categories = collect();
+        $names = [
+            'Music', 'Business', 'Education', 'Food & Drinks', 'Courses',
+            'Sports & Fitness', 'Classes', 'Arts', 'Parties', 'Science & Tech',
+            'Fashion', 'Health', 'Film & Media', 'Charity',
+        ];
+
+        $records = [];
+
+        foreach ($names as $name) {
+            array_push($records, [
+                'name' => $name,
+                'slug' => str_slug($name),
+                'image' => '/images/categories/'.str_slug($name).'.jpg',
+            ]);
+        }
+
+        foreach ($records as $record) {
+            $categories->push(Category::create($record));
+        }
 
         $events->each(function (Event $event) use ($categories) {
             $event->categories()->attach(
