@@ -46,8 +46,7 @@ class UpdateEvent extends FormRequest
         $event->start_date = $this->start_date;
         $event->end_date = $this->end_date;
         $event->address = $this->address;
-        $event->longitude = $this->longitude;
-        $event->latitude = $this->latitude;
+        $event->location = $this->location;
 
         $event->save();
 

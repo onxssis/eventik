@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use App\Event;
 use App\Category;
+use App\Event;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StoreEvent extends FormRequest
 {
@@ -32,7 +32,7 @@ class StoreEvent extends FormRequest
             'price' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
-            'location' => 'required',
+            'address' => 'required',
         ];
     }
 
@@ -45,9 +45,8 @@ class StoreEvent extends FormRequest
             'price' => $this->price,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'address' => $this->location,
-            'longitude' => $this->longitude,
-            'latitude' => $this->latitude,
+            'address' => $this->address,
+            'location' => $this->location,
             'image' => $this->imagePath,
         ]);
 

@@ -8,10 +8,15 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
+use Phaza\LaravelPostgis\Geometries\Geometry;
 
 class Event extends Model
 {
+    use PostgisTrait;
+
     protected $guarded = [];
 
     protected $appends = ['formattedPrice', 'isAttending', 'isBookmarked', 'formattedStartDate'];
@@ -20,6 +25,17 @@ class Event extends Model
     // protected $with = [''];
 
     protected $dates = ['start_date', 'end_date'];
+
+    protected $postgisFields = [
+        'location',
+    ];
+
+    protected $postgisTypes = [
+        'location' => [
+            'geomtype' => Geometry::class,
+            'srid' => 4326,
+        ],
+    ];
 
     public static function boot()
     {
@@ -131,5 +147,13 @@ class Event extends Model
     public function getFormattedStartDateAttribute()
     {
         return $this->start_date->toDayDateTimeString();
+    }
+
+    public function setLocationAttribute($value)
+    {
+        $latLng = explode(' ', $value);
+        $latitude = $latLng[0];
+        $longitude = $latLng[1];
+        $this->attributes['location'] = DB::raw("ST_SetSRID(ST_MakePoint({$latitude}, {$longitude}), 4326)");
     }
 }

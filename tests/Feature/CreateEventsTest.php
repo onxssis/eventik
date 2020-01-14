@@ -2,20 +2,17 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Category;
 use App\Event;
 use App\User;
-use App\Category;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class CreateEventsTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_an_unauthenticated_user_cant_view_create_form()
+    public function testAnUnauthenticatedUserCantViewCreateForm()
     {
         $this->get(route('events.create'))
             ->assertRedirect('/login');
@@ -24,7 +21,7 @@ class CreateEventsTest extends TestCase
             ->assertRedirect('/login');
     }
 
-    public function test_an_authenticated_user_can_create_an_event()
+    public function testAnAuthenticatedUserCanCreateAnEvent()
     {
         $this->withoutExceptionHandling();
 
@@ -37,22 +34,27 @@ class CreateEventsTest extends TestCase
         $ids = $categories->pluck('id')->toArray();
 
         $response = $this->actingAs($user)
-            ->post(route('events.store', $event->toArray() + [
-                'location' => $event->address,
-                'categories' => $ids,
-            ]));
+            ->post(
+                route(
+                    'events.store',
+                    array_merge(
+                        $event->toArray(),
+                        ['location' => '6.56679 -21.34554', 'categories' => $ids]
+                    )
+                )
+            );
 
         $this->assertDatabaseHas('events', [
             'title' => $event->title,
             'user_id' => $user->id
         ]);
 
-        $freshEvent = Event::find(1);
+        $freshEvent = Event::first();
 
         $this->assertInstanceOf(Category::class, $freshEvent->categories[0]);
     }
 
-    public function test_all_event_fields_are_validated_correctly()
+    public function testAllEventFieldsAreValidatedCorrectly()
     {
         $this->publishEvent(['title' => ''])
             ->assertSessionHasErrors('title');
@@ -61,7 +63,7 @@ class CreateEventsTest extends TestCase
             ->assertSessionHasErrors('description');
     }
 
-    public function test_an_event_requires_at_least_one_category()
+    public function testAnEventRequiresAtLeastOneCategory()
     {
         $categories = factory(Category::class, 3)->create();
 
@@ -90,9 +92,15 @@ class CreateEventsTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $event = factory(Event::class)->make($overrides);
+        $event = factory(Event::class)->make();
+
+        $transformedEvent = array_merge($event->toArray(), $overrides);
 
         return $this->actingAs($user)
-            ->post(route('events.store', $event->toArray()));
+            ->post(route('events.store', array_merge(
+                $transformedEvent,
+                ['location' => '6.56679 -21.34554']
+            )))
+        ;
     }
 }

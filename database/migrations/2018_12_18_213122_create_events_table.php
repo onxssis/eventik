@@ -1,15 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateEventsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -21,8 +19,7 @@ class CreateEventsTable extends Migration
             $table->text('description');
             $table->integer('price');
             $table->string('address');
-            $table->string('longitude')->nullable();
-            $table->string('latitude')->nullable();
+            $table->point('location', 'GEOMETRY');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->string('image');
@@ -31,14 +28,13 @@ class CreateEventsTable extends Migration
 
             $table->foreign('user_id')->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('cascade')
+            ;
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
+use Phaza\LaravelPostgis\Geometries\Point;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,8 +48,7 @@ $factory->define(App\Event::class, function (Faker $faker) {
         'description' => $faker->paragraphs(3, true),
         'price' => rand(0, 50000),
         'address' => $faker->address,
-        'longitude' => $faker->longitude,
-        'latitude' => $faker->latitude,
+        'location' => new Point($faker->latitude, $faker->longitude),
         'start_date' => $start_date->format('Y-m-d H:i:s'),
         'end_date' => $end_date->format('Y-m-d H:i:s'),
         'image' => str_replace('lorempixel.com', 'picsum.photos', explode('?', $faker->imageUrl())[0]),

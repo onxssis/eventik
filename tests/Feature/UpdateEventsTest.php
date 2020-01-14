@@ -2,30 +2,36 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Category;
 use App\Event;
 use App\User;
-use App\Category;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Phaza\LaravelPostgis\Geometries\Point;
+use Tests\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class UpdateEventsTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_an_unauthenticated_user_cant_update_any_event()
+    public function testAnUnauthenticatedUserCantUpdateAnyEvent()
     {
         $event = factory(Event::class)->create();
 
         $this->get(route('events.edit', $event))
-            ->assertRedirect('/login');
+            ->assertRedirect('/login')
+        ;
 
         $this->patch(route('events.update', $event))
             ->assertStatus(302)
-            ->assertRedirect('/login');
+            ->assertRedirect('/login')
+        ;
     }
 
-    public function test_an_event_cant_be_updated_unless_by_its_creator()
+    public function testAnEventCantBeUpdatedUnlessByItsCreator()
     {
         // $this->withoutExceptionHandling();
 
@@ -47,13 +53,12 @@ class UpdateEventsTest extends TestCase
                 'description' => 'description changed',
                 'price' => $event2->price,
                 'address' => $event2->address,
-                'longitude' => $event2->longitude,
-                'latitude' => $event2->latitude,
                 'start_date' => $event2->start_date,
                 'end_date' => $event2->end_date,
                 'categories' => $ids,
             ])
-            ->assertStatus(403);
+            ->assertStatus(403)
+        ;
 
         $this->assertDatabaseHas('events', [
             'title' => $event2->title,
@@ -61,7 +66,7 @@ class UpdateEventsTest extends TestCase
         ]);
     }
 
-    public function test_an_event_can_be_updated_by_its_creator()
+    public function testAnEventCanBeUpdatedByItsCreator()
     {
         $this->withoutExceptionHandling();
 
@@ -81,19 +86,19 @@ class UpdateEventsTest extends TestCase
                 'description' => 'description changed',
                 'price' => $event->price,
                 'address' => $event->address,
-                'longitude' => $event->longitude,
-                'latitude' => $event->latitude,
+                'location' => '12.3332 -21.3443',
                 'start_date' => $event->start_date,
                 'end_date' => $event->end_date,
                 'categories' => $ids,
             ])
-            ->assertSuccessful();
-
+            ->assertSuccessful()
+        ;
 
         tap($event->fresh(), function ($event) {
             $this->assertEquals('title changed', $event->title);
             $this->assertEquals('title-changed', $event->slug);
             $this->assertEquals('description changed', $event->description);
+            $this->assertEquals(new Point(-21.3443, 12.3332), $event->location);
         });
     }
 }
