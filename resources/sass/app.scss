@@ -15,6 +15,7 @@
 @import "components/searchbar";
 @import "components/modal";
 @import "components/categories";
+@import "components/show";
 
 [v-cloak] {
     display: none;
@@ -265,6 +266,10 @@ main {
     filter: blur(70px) grayscale(40%);
     transform: scale(1.5);
     object-fit: cover;
+
+    @media (max-width: 1024px) {
+        display: none;
+    }
 }
 
 .column.is-4.is-close-width {

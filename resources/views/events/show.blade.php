@@ -7,19 +7,19 @@
         style="border-bottom: 1px solid black;">
     <div class="container">
 
-        <header class="m-t-lg event-head has-background-white p-b-lg">
+        <header class="event-head has-background-white p-b-lg">
 
-            <div class="columns is-tablet head-columns">
+            <div class="event-head-inner">
 
-                <div class="column is-8 p-b-none p-t-none p-r-none">
+                <div class="left">
 
                     <figure>
-                        <img class="image" src="{{ $event->image }}" alt="" style="height: 100%">
+                        <img class="event-image" src="{{ $event->image }}" alt="{{ $event->title }}" />
                     </figure>
 
                 </div>
 
-                <div class="column is-4 is-close-width p-b-none p-t-none has-background-light p-r-none">
+                <div class="right has-background-light">
 
                     <div class="p-lg">
 
@@ -113,7 +113,7 @@
                             <div class="event-details__data">
                                 <p>{{ ucwords($event->address) }}</p>
 
-                                @if ($event->longitude != null)
+                                @if ($event->location['lng'] != null)
                                 <p class="m-t-md">
                                     <a class="" href="#map-target">View Map</a>
                                 </p>
@@ -154,9 +154,12 @@
                 <div class="colums">
                     <div class="column is-12 has-text-centered justify-content-center">
 
-                        @if ($event->longitude != null)
-                        <div id="map-target" class="column is-12 has-text-centered justify-content-center">
-                            <google-maps lat="{{ $event->latitude }}" lng="{{ $event->longitude }}"></google-maps>
+                        @if ($event->location['lng'] != null)
+                        <div id="map-target" class="column is-12 has-text-centered justify-content-center"
+                            style="height: 500px">
+                            <event-map :lat="{{ $event->location['lat'] }}" :lng="{{ $event->location['lng'] }}"
+                                :markers="[[{{ $event->location['lat'] }}, {{ $event->location['lng'] }}]]">
+                            </event-map>
                         </div>
                         @endif
 

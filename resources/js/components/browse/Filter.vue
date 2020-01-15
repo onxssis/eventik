@@ -50,7 +50,10 @@
 </template>
 
 <script>
+import FilterMixin from "../../mixins/FilterMixin";
+
 export default {
+  mixins: [FilterMixin],
   props: {
     endpoint: {
       type: String
@@ -76,33 +79,14 @@ export default {
     });
   },
   methods: {
-    applyFilter(key, value) {
-      this.selectedFilters = Object.assign({}, this.selectedFilters, {
-        [key]: value
-      });
-
-      this.updateQueryString();
-      this.closeFilter();
-    },
     clearFilter(key) {
       this.selectedFilters = _.omit(this.selectedFilters, [key]);
 
       this.updateQueryString();
-      this.closeFilter();
     },
     clearFilters() {
       this.selectedFilters = {};
       this.updateQueryString();
-    },
-    closeFilter() {
-      this.$emit("filter:close");
-    },
-    updateQueryString() {
-      this.$router.replace({
-        query: {
-          ...this.selectedFilters
-        }
-      });
     }
   }
 };
