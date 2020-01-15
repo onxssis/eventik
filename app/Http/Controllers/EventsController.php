@@ -25,8 +25,17 @@ class EventsController extends Controller
      */
     public function index()
     {
+        $location = geoip()->getLocation();
+        $point = null;
+
+        if ('127.0.0.0' !== $location['ip']) {
+            $point = "{$location['lat']}, {$location['lon']}";
+        }
+
+        dd($point);
+
         $events = $this->repo->getUpcomingEvents(4);
-        $eventsNearby = $this->repo->getEventsNearby();
+        $eventsNearby = $this->repo->getEventsNearby($point);
 
         return view('welcome', compact('events', 'eventsNearby'));
     }
