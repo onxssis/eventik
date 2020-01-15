@@ -48,7 +48,7 @@ $factory->define(App\Event::class, function (Faker $faker) {
         'description' => $faker->paragraphs(3, true),
         'price' => rand(0, 50000),
         'address' => $faker->address,
-        'location' => new Point(6.5109603, 3.3511996),
+        'location' => new Point($faker->latitude, $faker->longitude),
         'start_date' => $start_date->format('Y-m-d H:i:s'),
         'end_date' => $end_date->format('Y-m-d H:i:s'),
         'image' => str_replace('lorempixel.com', 'picsum.photos', explode('?', $faker->imageUrl())[0]),
