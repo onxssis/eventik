@@ -21,68 +21,74 @@
     <div id="navbarBasicExample" class="navbar-menu">
 
         <div class="navbar-start">
-            <div class="control has-icons-left">
-                <input class="input is-rounded search-bar" type="search">
-        
-                <span class="icon is-left">
-                    <i class="fas fa-search"></i>
-                </span>
-            </div>
+            <form action="/b">
+                <div class="control has-icons-left">
+                    <input class="input is-rounded search-bar" name="q" type="search">
+
+                    <span class="icon is-left">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </div>
+            </form>
         </div>
 
         <div class="navbar-end">
-            <a class="navbar-item">
+            <a href="/b" class="navbar-item">
                 Browse Events
             </a>
 
             @auth
 
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        John Doe
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    John Doe
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item">
+                        My Events
                     </a>
 
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item">
-                            My Events
-                        </a>
+                    <a class="navbar-item">
+                        Saved Events
+                    </a>
 
-                        <a class="navbar-item">
-                            Saved Events
-                        </a>
+                    <a class="navbar-item">
+                        Tickets
+                    </a>
 
-                        <a class="navbar-item">
-                            Tickets
-                        </a>
-
-                    </div>
                 </div>
+            </div>
 
-                <span>
-                    
-                    <a href="{{ route('logout') }}" class="navbar-item" onclick="event.preventDefault();
+            <a class="navbar-item" href="{{ route('events.create') }}">
+                Create Event
+            </a>
+
+            <span>
+
+                <a href="{{ route('logout') }}" class="navbar-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
-                        Log Out
-                    </a>
+                    Log Out
+                </a>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </span>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </span>
 
             @else
 
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a href="{{ route('register') }}" class="button is-light">
-                            Sign up
-                        </a>
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a href="{{ route('register') }}" class="button is-light">
+                        Sign up
+                    </a>
 
-                        <a href="{{ route('login') }}" class="button login-button">
-                            Log in
-                        </a>
-                    </div>
+                    <a href="{{ route('login') }}" class="button login-button">
+                        Log in
+                    </a>
                 </div>
+            </div>
 
             @endauth
         </div>

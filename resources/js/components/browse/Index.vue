@@ -1,40 +1,33 @@
 <template>
   <div class="row">
-    <div class="container is-fluid">
-      <div class="browse">
-        <div class="mobile-filter" @click="filterOpen = !filterOpen">
-          <p>show filters</p>
+    <div class="browse">
+      <div class="mobile-filter" @click="filterOpen = !filterOpen">
+        <p>show filters</p>
+      </div>
+
+      <filters endpoint="/api/b/filters" :open="filterOpen" @filter:close="filterOpen = false"></filters>
+
+      <main class="browse-main">
+        <div class="filter-input">
+          <search-icon></search-icon>
+
+          <input type="text" placeholder="Filter Search" v-model="searchFilter" />
+
+          <div class="focus-line"></div>
         </div>
 
-        <filters endpoint="/api/b/filters" :open="filterOpen" @filter:close="filterOpen = false"></filters>
+        <div class="events-grid">
+          <spinner class="spinner center" v-if="loading"></spinner>
 
-        <main class="browse-main">
-          <div class="filter-input">
-            <search-icon></search-icon>
+          <h2 class="empty center" v-if="!filteredEvents.length">No results</h2>
 
-            <input type="text" placeholder="Filter Search" v-model="searchFilter" />
+          <a href>
+            <event v-for="event in filteredEvents" :event="event" :key="event.id" v-show="!loading"></event>
+          </a>
+        </div>
 
-            <div class="focus-line"></div>
-          </div>
-
-          <div class="events-grid">
-            <spinner class="spinner center" v-if="loading"></spinner>
-
-            <h2 class="empty center" v-if="!filteredEvents.length">No results</h2>
-
-            <a href>
-              <event
-                v-for="event in filteredEvents"
-                :event="event"
-                :key="event.id"
-                v-show="!loading"
-              ></event>
-            </a>
-          </div>
-
-          <pagination v-if="filteredEvents.length" :meta="paginationMeta"></pagination>
-        </main>
-      </div>
+        <pagination v-if="filteredEvents.length" :meta="paginationMeta"></pagination>
+      </main>
     </div>
   </div>
 </template>
