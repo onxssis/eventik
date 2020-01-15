@@ -6,10 +6,12 @@
     @dragend="dragged = true"
     style="width: 100%; height: 100%;"
     :options="{
-        zoomControl: false,
-        mapTypeControl: false,
-        fullSceenControl: false,
-        styles
+      zoomControl: true,
+      mapTypeControl: false,
+      streetViewControl: false,
+      rotateControl: false,
+      fullscreenControl: false,
+      styles
     }"
   >
     <GmapMarker
