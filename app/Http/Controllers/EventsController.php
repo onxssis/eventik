@@ -6,11 +6,15 @@ use App\Category;
 use App\Event;
 use App\Http\Requests\StoreEvent;
 use App\Http\Requests\UpdateEvent;
+use App\Repositories\Event\IEventRepository;
 
 class EventsController extends Controller
 {
-    public function __construct()
+    protected $repo;
+
+    public function __construct(IEventRepository $repo)
     {
+        $this->repo = $repo;
         $this->middleware('auth')->except(['show', 'index']);
     }
 
@@ -21,9 +25,10 @@ class EventsController extends Controller
      */
     public function index()
     {
-        $events = (new Event())->getUpcomingEvents(3);
+        $events = $this->repo->getUpcomingEvents(4);
+        $eventsNearby = $this->repo->getEventsNearby();
 
-        return view('welcome', compact('events'));
+        return view('welcome', compact('events', 'eventsNearby'));
     }
 
     /**
@@ -48,7 +53,8 @@ class EventsController extends Controller
     public function store(StoreEvent $request)
     {
         $request->uploadEventImage()
-            ->persist();
+            ->persist()
+        ;
     }
 
     /**

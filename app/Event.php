@@ -4,14 +4,12 @@ namespace App;
 
 use App\Filters\Event\EventFilters;
 use App\Helpers\Slug;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
-use Phaza\LaravelPostgis\Geometries\Geometry;
 
 class Event extends Model
 {
@@ -32,7 +30,7 @@ class Event extends Model
 
     protected $postgisTypes = [
         'location' => [
-            'geomtype' => Geometry::class,
+            'geomtype' => 'geometry',
             'srid' => 4326,
         ],
     ];
@@ -101,26 +99,6 @@ class Event extends Model
         return 'slug';
     }
 
-    public function getUpcomingEvents($limit = 5)
-    {
-        $today = Carbon::today();
-
-        return $this->where('start_date', '>', $today)
-            ->limit($limit)
-            ->orderBy('start_date', 'desc')
-            ->get()
-        ;
-    }
-
-    public function getFeaturedEvents($limit = 5)
-    {
-        return $this->whereHas('bookmarks')
-            ->orWhereHas('reservations')
-            ->limit($limit)
-            // ->orderBy('start_date', 'desc')
-            ->get()->shuffle();
-    }
-
     public function getFormattedPriceAttribute()
     {
         return $this->price > 0 ? '&#8358; '.number_format($this->price / 100) : 'Free';
@@ -155,5 +133,15 @@ class Event extends Model
         $latitude = $latLng[0];
         $longitude = $latLng[1];
         $this->attributes['location'] = DB::raw("ST_SetSRID(ST_MakePoint({$latitude}, {$longitude}), 4326)");
+    }
+
+    public function getLocationAttribute()
+    {
+        $latlng = explode(' ', $this->attributes['location']);
+
+        return [
+            'lat' => $latlng[1],
+            'lng' => $latlng[0],
+        ];
     }
 }

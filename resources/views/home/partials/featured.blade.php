@@ -2,7 +2,7 @@
     <div class="container">
         <h1 class="title is-4">Upcoming Events</h1>
 
-        <div class="columns">
+        <div class="columns is-multiline">
             @foreach ($events as $event)
 
             <div class="column is-3">
@@ -18,9 +18,9 @@
                         <div class="featured-card__meta">
                             <span>{{ $event->start_date }}</span>
 
-                            <span class="featured-card__meta--fee">
+                            {{-- <span class="featured-card__meta--fee">
                                 {!! $event->formattedPrice !!}
-                            </span>
+                            </span> --}}
                         </div>
 
                         <div class="title">
