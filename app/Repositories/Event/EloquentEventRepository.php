@@ -41,8 +41,10 @@ class EloquentEventRepository implements IEventRepository
 
     public function getEventsNearby($point = null, $operator = '<=', $distance = 10000, $limit = 8)
     {
+        $location = geoip()->getLocation();
+
         if (!isset($point)) {
-            $point = new Point(6.453060, 3.395830);
+            $point = new Point($location['lat'], $location['lat']);
         } elseif (is_string($point) && !$point instanceof Point) {
             $srid_point = explode(',', $point);
 
