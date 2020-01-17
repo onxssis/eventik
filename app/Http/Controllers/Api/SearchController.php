@@ -13,7 +13,7 @@ class SearchController extends Controller
     public function index(Request $request)
     {
         return new SearchResource(
-            Event::with('categories')->filter($request)->paginate(15)
+            Event::with('categories')->filter($request)->paginate(5)
         );
     }
 

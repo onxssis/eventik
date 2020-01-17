@@ -4,14 +4,13 @@
     ref="mapRef"
     :zoom="zoom"
     @dragend="dragged = true"
-    style="width: 100%; height: 100%;"
+    :style="`width: ${width}; height: ${height};`"
     :options="{
       zoomControl: true,
       mapTypeControl: false,
       streetViewControl: false,
       rotateControl: false,
-      fullscreenControl: false,
-      styles
+      fullscreenControl: false
     }"
   >
     <GmapMarker
@@ -55,6 +54,14 @@ export default {
     isSearchable: {
       type: Boolean,
       default: false
+    },
+    width: {
+      type: String,
+      default: "100%"
+    },
+    height: {
+      type: String,
+      default: "100%"
     }
   },
   data() {

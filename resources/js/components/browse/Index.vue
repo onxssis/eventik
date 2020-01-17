@@ -1,33 +1,51 @@
 <template>
   <div class="row">
-    <div class="browse">
-      <div class="mobile-filter" @click="filterOpen = !filterOpen">
-        <p>show filters</p>
+    <div class="container is-fluid">
+      <div class="browse">
+        <div class="mobile-filter" @click="filterOpen = !filterOpen">
+          <p>show filters</p>
+        </div>
+        <aside class="browse-aside">
+          <filters endpoint="/api/b/filters" :open="filterOpen" @filter:close="filterOpen = false"></filters>
+
+          <event-map
+            class="browse-map"
+            :events="events"
+            :lat="defaultLocation.lat"
+            :lng="defaultLocation.lng"
+            :zoom="10"
+            height="400px"
+            isSearchable
+          ></event-map>
+        </aside>
+
+        <main class="browse-main">
+          <div class="filter-input">
+            <search-icon></search-icon>
+
+            <input type="text" placeholder="Filter Search" v-model="searchFilter" />
+
+            <div class="focus-line"></div>
+          </div>
+
+          <div class="events-grid">
+            <spinner class="spinner center" v-if="loading"></spinner>
+
+            <h2 class="empty center" v-if="!filteredEvents.length">No results</h2>
+
+            <a href>
+              <event
+                v-for="event in filteredEvents"
+                :event="event"
+                :key="event.id"
+                v-show="!loading"
+              ></event>
+            </a>
+          </div>
+
+          <pagination v-if="filteredEvents.length" :meta="paginationMeta"></pagination>
+        </main>
       </div>
-
-      <filters endpoint="/api/b/filters" :open="filterOpen" @filter:close="filterOpen = false"></filters>
-
-      <main class="browse-main">
-        <div class="filter-input">
-          <search-icon></search-icon>
-
-          <input type="text" placeholder="Filter Search" v-model="searchFilter" />
-
-          <div class="focus-line"></div>
-        </div>
-
-        <div class="events-grid">
-          <spinner class="spinner center" v-if="loading"></spinner>
-
-          <h2 class="empty center" v-if="!filteredEvents.length">No results</h2>
-
-          <a href>
-            <event v-for="event in filteredEvents" :event="event" :key="event.id" v-show="!loading"></event>
-          </a>
-        </div>
-
-        <pagination v-if="filteredEvents.length" :meta="paginationMeta"></pagination>
-      </main>
     </div>
   </div>
 </template>
@@ -38,6 +56,7 @@ import Filters from "./Filter";
 import Pagination from "../pagination/Pagination";
 import Spinner from "./Spinner";
 import SearchIcon from "./SearchIcon";
+import EventMap from "../EventMap";
 
 export default {
   components: {
@@ -87,6 +106,13 @@ export default {
           event.title.toLowerCase().includes(searchQuery) ||
           event.address.toLowerCase().includes(searchQuery)
       );
+    },
+
+    defaultLocation() {
+      return {
+        lat: 6.5349065,
+        lng: 3.2448299
+      };
     }
   },
   watch: {
@@ -102,19 +128,33 @@ export default {
 @media (min-width: 50em) {
   .browse {
     display: grid;
-    grid-template-columns: 33% 1fr;
+    grid-template-columns: 35% 1fr;
+    grid-gap: 20px;
+    margin: 0 20px;
+    position: relative;
   }
+}
+
+@media (min-width: 65em) {
+  .browse-map {
+    display: block !important;
+  }
+}
+
+.browse-map {
+  display: none;
 }
 
 .browse-main {
   grid-column: 2 / 3;
 }
+
 .browse-aside {
   grid-column: 1 / 2;
 }
 
 .tag-filters {
-  padding: 60px 20px;
+  padding: 60px 0;
 }
 
 .tag-filters ul {
@@ -297,8 +337,8 @@ img {
 
 .cont {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  grid-template-rows: 150px;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 130px;
   grid-gap: 20px;
   padding: 20px;
   width: 100%;
