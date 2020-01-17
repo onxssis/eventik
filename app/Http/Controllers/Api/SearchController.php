@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Event;
-use App\Http\Resources\SearchResource;
 use App\Filters\Event\EventFilters;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\SearchResource;
+use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
@@ -20,7 +20,7 @@ class SearchController extends Controller
     public function filters()
     {
         return response()->json([
-            'data' => EventFilters::mappings()
+            'data' => EventFilters::mappings(),
         ], 200);
     }
 }

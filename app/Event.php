@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Filters\Event\EventFilters;
+use App\Helpers\Queries;
 use App\Helpers\Slug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -55,6 +56,11 @@ class Event extends Model
     public function scopeFilter(Builder $builder, Request $request, $filters = [])
     {
         return (new EventFilters($request))->append($filters)->filter($builder);
+    }
+
+    public function scopeGetEventsNearby(Builder $builder, $point = null, $operator = '<=', $distance = 19000, $limit = 8)
+    {
+        return Queries::getEventsNearby($builder, $point, $operator, $distance, $limit);
     }
 
     public function user()

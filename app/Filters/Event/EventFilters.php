@@ -2,8 +2,8 @@
 
 namespace App\Filters\Event;
 
-use App\Filters\FiltersAbstract;
 use App\Category;
+use App\Filters\FiltersAbstract;
 
 class EventFilters extends FiltersAbstract
 {
@@ -11,6 +11,7 @@ class EventFilters extends FiltersAbstract
         'access' => AccessFilter::class,
         'cat' => CategoryFilter::class,
         'q' => QueryFilter::class,
+        'r' => LocationFilter::class,
     ];
 
     public static function mappings()
@@ -20,7 +21,7 @@ class EventFilters extends FiltersAbstract
             //     'paid' => 'Paid',
             //     'free' => 'Free'
             // ],
-            'cat' => Category::get()->pluck('name', 'slug')
+            'cat' => Category::get()->pluck('name', 'slug'),
         ];
     }
 }

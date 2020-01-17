@@ -2,8 +2,8 @@
 
 namespace App\Filters;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 abstract class FiltersAbstract
 {
@@ -25,6 +25,13 @@ abstract class FiltersAbstract
         return $builder;
     }
 
+    public function append(array $filters)
+    {
+        $this->filters = array_merge($this->filters, $filters);
+
+        return $this;
+    }
+
     protected function getFilters()
     {
         return $this->excludeFilters($this->filters);
@@ -32,18 +39,11 @@ abstract class FiltersAbstract
 
     protected function resolveFilters($filter)
     {
-        return new $this->filters[$filter];
+        return new $this->filters[$filter]();
     }
 
     protected function excludeFilters($filters)
     {
-        return array_filter($this->request->only(array_keys($this->filters)));
-    }
-
-    public function append(array $filters)
-    {
-        $this->filters = array_merge($this->filters, $filters);
-
-        return $this;
+        return array_filter($this->request->only(array_keys($filters)));
     }
 }

@@ -26,9 +26,9 @@ class EventsController extends Controller
     public function index()
     {
         $events = $this->repo->getUpcomingEvents(4);
-        $eventsNearby = $this->repo->getEventsNearby();
+        $eventsNearby = Event::getEventsNearby();
 
-        return view('welcome', compact('events', 'eventsNearby'));
+        return view('welcome', compact('events'));
     }
 
     /**

@@ -82,8 +82,10 @@ export default {
 
       if (!searchQuery) return this.events;
 
-      return this.events.filter(event =>
-        event.title.toLowerCase().includes(searchQuery)
+      return this.events.filter(
+        event =>
+          event.title.toLowerCase().includes(searchQuery) ||
+          event.address.toLowerCase().includes(searchQuery)
       );
     }
   },

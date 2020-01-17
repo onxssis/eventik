@@ -78,7 +78,7 @@ export default {
   methods: {
     searchArea() {
       this.applyFilter(
-        "area",
+        "r",
         `${this.map.center.lat()},${this.map.center.lng()}`
       );
     }
