@@ -49,7 +49,7 @@ export default {
       type: Number,
       default: 13
     },
-    markers: {
+    events: {
       type: Array
     },
     isSearchable: {
@@ -84,15 +84,13 @@ export default {
     }
   },
   watch: {
-    markers: {
+    events: {
       handler: function(val) {
-        this.mapMarkers = val.map(coord => {
-          const [lat, lng] = coord;
-
+        this.mapMarkers = val.map(event => {
           return {
             position: {
-              lat,
-              lng
+              lat: Number(event.location.lat),
+              lng: Number(event.location.lng)
             }
           };
         });
@@ -142,6 +140,6 @@ export default {
 }
 
 ::v-deep .vue-map-hidden {
-  display: block !important ;
+  display: block !important;
 }
 </style>

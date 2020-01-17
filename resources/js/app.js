@@ -62,7 +62,7 @@ Vue.component(
 );
 Vue.component("login-modal", require("./components/AuthModal.vue").default);
 Vue.component("bookmark", require("./components/BookmarkButton.vue").default);
-Vue.component("event-map", require("./components/GoogleMap.vue").default);
+Vue.component("event-map", require("./components/EventMap.vue").default);
 Vue.component("datetime", Datetime);
 Vue.component(
     "category-card",

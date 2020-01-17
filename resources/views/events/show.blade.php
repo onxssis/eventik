@@ -158,7 +158,7 @@
                         <div id="map-target" class="column is-12 has-text-centered justify-content-center"
                             style="height: 500px">
                             <event-map :lat="{{ $event->location['lat'] }}" :lng="{{ $event->location['lng'] }}"
-                                :markers="[[{{ $event->location['lat'] }}, {{ $event->location['lng'] }}]]">
+                                :events="[{{ $event }}]">
                             </event-map>
                         </div>
                         @endif
