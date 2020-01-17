@@ -19,6 +19,7 @@
       :position="m.position"
       :clickable="true"
       :draggable="false"
+      :animation="4"
       :icon="{url: '/images/marker.svg'}"
       @click="center=m.position"
     />

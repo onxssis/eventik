@@ -27,8 +27,9 @@ class EventsController extends Controller
     {
         $events = $this->repo->getUpcomingEvents(4);
         $eventsNearby = Event::getEventsNearby();
+        $location = geoip()->getLocation()['city'];
 
-        return view('welcome', compact('events'));
+        return view('welcome', compact('events', 'eventsNearby', 'location'));
     }
 
     /**

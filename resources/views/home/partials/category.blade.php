@@ -1,4 +1,4 @@
-<section class="section" style="background: #f9f9f9;">
+<section class="section">
   <div class="container">
     <h1 class="title is-4">Browse By Category</h1>
 

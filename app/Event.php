@@ -18,7 +18,7 @@ class Event extends Model
 
     protected $guarded = [];
 
-    protected $appends = ['formattedPrice', 'isAttending', 'isBookmarked', 'formattedStartDate'];
+    protected $appends = ['formattedPrice', 'isAttending', 'isBookmarked', 'formattedStartDate', 'formattedDate'];
 
     protected $withCount = ['bookmarks', 'reservations'];
     // protected $with = [''];
@@ -131,6 +131,11 @@ class Event extends Model
     public function getFormattedStartDateAttribute()
     {
         return $this->start_date->toDayDateTimeString();
+    }
+
+    public function getFormattedDateAttribute()
+    {
+        return $this->start_date->format('jS F, Y g:i a');
     }
 
     public function setLocationAttribute($value)
