@@ -3,7 +3,11 @@
 
     h2 {
         font-weight: bold;
-        font-size: 1.5rem;
+        font-size: 2rem;
+        font-family: Viga, sans-serif;
+        letter-spacing: 2px;
+        text-shadow: -1px 0 #febf57, 0 1px #febf57, 1px 0 #febf57,
+            0 -1px #febf57;
     }
 
     &:hover {
