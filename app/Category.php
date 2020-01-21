@@ -20,6 +20,11 @@ class Category extends Model
         });
     }
 
+    public static function cacheKey()
+    {
+       return 'categories.index';
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';
