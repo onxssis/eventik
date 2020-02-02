@@ -64,17 +64,14 @@
                 Create Event
             </a>
 
-            <span>
-
-                <a href="{{ route('logout') }}" class="navbar-item" onclick="event.preventDefault();
+            <a href="{{ route('logout') }}" class="navbar-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
-                    Log Out
-                </a>
+                Log Out
+            </a>
 
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            </span>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
 
             @else
 

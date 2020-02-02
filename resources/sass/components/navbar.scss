@@ -39,3 +39,15 @@
 .navbar-burger-toggle:checked ~ .navbar-menu {
     display: block;
 }
+
+.navbar-start,
+.navbar-end {
+    height: 100%;
+}
+
+.navbar-start {
+    form {
+        display: flex;
+        align-self: center;
+    }
+}
