@@ -1,10 +1,5 @@
 @extends('layouts.master')
 
 @section('content')
-<section class="heade">
-    <div>
-        <figure></figure>
-    </div>
-    <div></div>
-</section>
+<profile-page></profile-page>
 @endsection
