@@ -1,0 +1,1 @@
+<p class="column has-text-weight-bold">No events available</p>
