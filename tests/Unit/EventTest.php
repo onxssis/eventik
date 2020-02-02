@@ -2,50 +2,39 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Repositories\Event\EloquentEventRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\User;
+use Tests\TestCase;
 
 class EventTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $event;
+    protected $repo;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->event = factory(\App\Event::class)->create();
+        $this->repo = new EloquentEventRepository($this->event);
     }
 
     /** @test */
-    public function it_belongs_to_a_user()
+    public function itBelongsToAUser()
     {
         $this->assertInstanceOf(\App\User::class, $this->event->user);
     }
 
     /** @test */
-    public function it_belongs_to_a_category()
+    public function itBelongsToACategory()
     {
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Collection::class, $this->event->categories);
     }
 
-    // /** @test */
-    // public function it_knows_if_it_is_bookmarked_or_not()
-    // {
-    //     $user = factory(User::class)->create();
-
-    //     $this->signIn($user);
-
-    //     $user->addToBookmarks($this->event);
-
-    //     $this->assertTrue($this->event->isBookmarkedByUser($user));
-    // }
-
     /** @test */
-    public function it_retrieves_its_upcoming_events()
+    public function itRetrievesItsUpcomingEvents()
     {
         $now = \Carbon\Carbon::now();
         $event1StartDate = \Carbon\Carbon::now()->addDays(2);
@@ -68,9 +57,7 @@ class EventTest extends TestCase
             'end_date' => $event2StartDate->addDay()->toDateTimeString(),
         ]);
 
-        $event = new \App\Event;
-
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $event->getUpcomingEvents());
-        $this->assertCount(3, $event->getUpcomingEvents());
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->repo->getUpcomingEvents());
+        $this->assertCount(3, $this->repo->getUpcomingEvents());
     }
 }

@@ -3,6 +3,7 @@
 use App\Category;
 use App\Event;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,8 +25,8 @@ class DatabaseSeeder extends Seeder
         foreach ($names as $name) {
             array_push($records, [
                 'name' => $name,
-                'slug' => str_slug($name),
-                'image' => '/images/categories/'.str_slug($name).'.jpg',
+                'slug' => Str::slug($name),
+                'image' => '/images/categories/'.Str::slug($name).'.jpg',
             ]);
         }
 

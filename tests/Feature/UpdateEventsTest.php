@@ -6,7 +6,6 @@ use App\Category;
 use App\Event;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Phaza\LaravelPostgis\Geometries\Point;
 use Tests\TestCase;
 
 /**
@@ -98,7 +97,10 @@ class UpdateEventsTest extends TestCase
             $this->assertEquals('title changed', $event->title);
             $this->assertEquals('title-changed', $event->slug);
             $this->assertEquals('description changed', $event->description);
-            $this->assertEquals(new Point(-21.3443, 12.3332), $event->location);
+            $this->assertEquals([
+                'lat' => '-21.3443',
+                'lng' => '12.3332',
+            ], $event->location);
         });
     }
 }

@@ -94,14 +94,6 @@ export default {
       return gmapStyles[this.mode];
     }
   },
-  // watch: {
-  //   mode: {
-  //     handler: function(val) {
-
-  //     },
-  //     immediate: true
-  //   }
-  // },
   methods: {
     searchArea() {
       this.applyFilter(
@@ -177,9 +169,15 @@ export default {
 }
 
 .switch {
-  margin-bottom: 1rem;
   display: flex;
   justify-content: flex-end;
+}
+
+.event-map {
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 ::v-deep .vue-map-hidden {
