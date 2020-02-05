@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tabs">
+    <div :class="{ tabs: true, 'is-centered': isCentered }">
       <ul>
         <li v-for="(tab, i) in tabs" :key="i" :class="{ 'is-active': tab.isActive }">
           <a @click.prevent="selectTab(tab)">{{ tab.name }}</a>
@@ -16,6 +16,12 @@
 
 <script>
 export default {
+  props: {
+    isCentered: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       tabs: []

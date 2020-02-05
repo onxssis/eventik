@@ -39,7 +39,8 @@
           </span>
 
           <span>
-            <bookmark :bookmarked="{{ json_encode($event->isBookmarked) }}" :id="{{ $event->id }}">
+            <bookmark :bookmarked="{{ json_encode($event->isBookmarked) }}" :auth="{{ json_encode(auth()->check()) }}"
+              :id="{{ $event->id }}">
             </bookmark>
           </span>
         </div>

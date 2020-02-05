@@ -1,5 +1,5 @@
 @extends('layouts.master')
 
 @section('content')
-<profile-page></profile-page>
+<profile-page :data="{{ $data }}"></profile-page>
 @endsection

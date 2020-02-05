@@ -63,6 +63,20 @@ class Event extends Model
         return Queries::getEventsNearby($builder, $point, $operator, $distance, $limit);
     }
 
+    public function scopeMyTickets(Builder $query)
+    {
+        return $query->whereHas('reservations', function ($query) {
+            $query->where('user_id', auth()->id());
+        })->get();
+    }
+
+    public function scopeSavedEvents(Builder $query)
+    {
+        return $query->whereHas('bookmarks', function ($query) {
+            $query->where('user_id', auth()->id());
+        })->get();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -88,16 +102,14 @@ class Event extends Model
         $user = $user ?: auth()->user();
 
         return (bool) $this->bookmarks()->where('user_id', $user->id)
-            ->first()
-        ;
+            ->first();
     }
 
     public function getIsBookmarkedAttribute()
     {
         return $this->bookmarks()
             ->where('user_id', auth()->id())
-            ->exists()
-        ;
+            ->exists();
     }
 
     public function getRouteKeyName()
@@ -107,15 +119,14 @@ class Event extends Model
 
     public function getFormattedPriceAttribute()
     {
-        return $this->price > 0 ? '&#8358; '.number_format($this->price / 100) : 'Free';
+        return $this->price > 0 ? '&#8358; ' . number_format($this->price / 100) : 'Free';
     }
 
     public function getIsAttendingAttribute()
     {
         return $this->reservations()
             ->where('user_id', auth()->id())
-            ->exists()
-        ;
+            ->exists();
     }
 
     public function setStartDateAttribute($value)

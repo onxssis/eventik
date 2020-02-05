@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Event;
 
 class HomeController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -23,6 +21,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home')->with('data', collect([
+            'myEvents' => auth()->user()->events ?? [],
+            'savedEvents' => Event::savedEvents(),
+            'myTickets' => Event::myTickets()
+        ]));
     }
 }

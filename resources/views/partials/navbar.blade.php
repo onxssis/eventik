@@ -40,7 +40,7 @@
             @auth
 
             <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
+                <a class="navbar-link" href="{{ route('home') }}">
                     John Doe
                 </a>
 

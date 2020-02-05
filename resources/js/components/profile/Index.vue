@@ -11,10 +11,16 @@
 
     <section class="bottom">
       <div class="container is-fluid">
-        <Tabs>
-          <Tab name="My Events" :selected="true">My Events Content</Tab>
-          <Tab name="Saved Events">Saved Events Content</Tab>
-          <Tab name="Attending Events">Attending Events Content</Tab>
+        <Tabs is-centered>
+          <Tab name="My Events" :selected="true">
+            <EventData :events="data.myEvents" />
+          </Tab>
+          <Tab name="Saved Events">
+            <EventData :events="data.savedEvents" />
+          </Tab>
+          <Tab name="Attending Events">
+            <EventData :events="data.myTickets" />
+          </Tab>
         </Tabs>
       </div>
     </section>
@@ -25,12 +31,25 @@
 import Avatar from "./Avatar";
 import Tabs from "./Tabs";
 import Tab from "./Tab";
+import EventData from "./EventData";
 
 export default {
+  props: {
+    data: {
+      type: Object,
+      required: true
+    }
+  },
   components: {
     Avatar,
     Tabs,
-    Tab
+    Tab,
+    EventData
+  },
+  computed: {
+    noEntriesFound() {
+      return data => data.length < 1;
+    }
   }
 };
 </script>
