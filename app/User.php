@@ -28,6 +28,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getInitialsAttribute()
+    {
+        $parts = explode(' ', $this->name);
+
+        return $parts[0][0] . $parts[1][0];
+    }
+
     public function reservations()
     {
         return $this->hasMany(Reservation::class, 'user_id');

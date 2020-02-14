@@ -68,6 +68,7 @@ Vue.component(
     require("./components/profile/Index.vue").default
 );
 Vue.component("datetime", Datetime);
+Vue.component("avatar", require("./components/profile/Avatar.vue").default);
 Vue.component(
     "category-card",
     require("./components/CategoryCard.vue").default

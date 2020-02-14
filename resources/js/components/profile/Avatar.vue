@@ -1,10 +1,26 @@
 <template>
-  <div class="avatar">{{ initials }}</div>
+  <div
+    class="avatar"
+    :style="{ width: width + 'px', height: height + 'px', fontSize: `${(width / 2) - 10}px` }"
+  >{{ initials }}</div>
 </template>
 
 <script>
 export default {
-  props: ["name"],
+  props: {
+    name: {
+      type: String,
+      required: true
+    },
+    width: {
+      type: String,
+      default: "150"
+    },
+    height: {
+      type: String,
+      default: "150"
+    }
+  },
   computed: {
     initials() {
       const [first, last] = this.name.split(" ");

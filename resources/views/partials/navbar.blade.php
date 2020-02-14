@@ -39,39 +39,35 @@
 
             @auth
 
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link" href="{{ route('home') }}">
-                    John Doe
-                </a>
-
-                <div class="navbar-dropdown">
-                    <a class="navbar-item">
-                        My Events
-                    </a>
-
-                    <a class="navbar-item">
-                        Saved Events
-                    </a>
-
-                    <a class="navbar-item">
-                        Tickets
-                    </a>
-
-                </div>
-            </div>
-
             <a class="navbar-item" href="{{ route('events.create') }}">
                 Create Event
             </a>
 
-            <a href="{{ route('logout') }}" class="navbar-item" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                Log Out
-            </a>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a href="" class="navbar-item">
+                    <avatar name="{{ auth()->user()->name }}" width="50" height="50"></avatar>
+                </a>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
+                <div class="navbar-dropdown">
+                    <a href="{{ route('home') }}" class="navbar-item">
+                        My Events
+                    </a>
+
+                    <a href="{{ route('home') }}" class="navbar-item">
+                        Tickets
+                    </a>
+
+                    <a href="{{ route('logout') }}" class="navbar-item" onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                        Log Out
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+
+                </div>
+            </div>
 
             @else
 

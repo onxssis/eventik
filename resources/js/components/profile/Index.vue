@@ -3,8 +3,8 @@
     <section class="section top">
       <div class="container">
         <div class="top-container">
-          <Avatar name="Jimmy Woo" class="avat" />
-          <h1 class="title is-2 has-text-weight-normal">Jimmy Woo</h1>
+          <Avatar :name="owner" class="avat" />
+          <h1 class="title is-2 has-text-weight-normal">{{ owner }}</h1>
         </div>
       </div>
     </section>
@@ -37,6 +37,10 @@ export default {
   props: {
     data: {
       type: Object,
+      required: true
+    },
+    owner: {
+      type: String,
       required: true
     }
   },
