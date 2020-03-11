@@ -174,7 +174,6 @@ export default {
 }
 
 .event-map {
-  height: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
