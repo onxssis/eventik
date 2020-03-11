@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Repositories\Event\EloquentEventRepository;
 use App\Repositories\Event\IEventRepository;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,6 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (app()->environment() === 'production') {
+            URL::forceScheme('https');
+        }
     }
 
     /**
