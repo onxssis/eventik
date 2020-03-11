@@ -2,7 +2,7 @@
 
 Explore, Create, and Attend Events! (Eventbrite Clone)
 
-[Eventik](#) is a full stack web application inspired by Eventbrite. It was built using Laravel on the backend, a PostgreSQL database, and Vue.js on the front end.
+[Eventik](https://eventik-app.herokuapp.com/) is a full stack web application inspired by Eventbrite. It was built using Laravel on the backend, a PostgreSQL database, and Vue.js on the front end.
 
 The application allows users to create events, browse events, and register for event tickets.
 
