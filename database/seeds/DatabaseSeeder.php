@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $events = factory(Event::class, 70)->create();
+        // $events = factory(Event::class, 70)->create();
         $categories = collect();
         $names = [
             'Music', 'Business', 'Education', 'Food & Drinks', 'Courses',
@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             array_push($records, [
                 'name' => $name,
                 'slug' => Str::slug($name),
-                'image' => '/images/categories/'.Str::slug($name).'.jpg',
+                'image' => '/images/categories/' . Str::slug($name) . '.jpg',
             ]);
         }
 
@@ -34,10 +34,10 @@ class DatabaseSeeder extends Seeder
             $categories->push(Category::create($record));
         }
 
-        $events->each(function (Event $event) use ($categories) {
-            $event->categories()->attach(
-                $categories->random(rand(1, 3))->pluck('id')->toArray()
-            );
-        });
+        // $events->each(function (Event $event) use ($categories) {
+        //     $event->categories()->attach(
+        //         $categories->random(rand(1, 3))->pluck('id')->toArray()
+        //     );
+        // });
     }
 }

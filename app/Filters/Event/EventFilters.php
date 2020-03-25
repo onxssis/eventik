@@ -17,10 +17,6 @@ class EventFilters extends FiltersAbstract
     public static function mappings()
     {
         return [
-            // 'access' => [
-            //     'paid' => 'Paid',
-            //     'free' => 'Free'
-            // ],
             'cat' => Category::get()->pluck('name', 'slug'),
         ];
     }
