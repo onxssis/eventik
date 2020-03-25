@@ -38,8 +38,8 @@
                             <label class="label">Location</label>
 
                             <div class="control">
-                                <input class="input{{ $errors->has('location') ? ' is-danger' : '' }}" type="text"
-                                    name="location" placeholder="Event location" id="location-autocomplete" required>
+                                <input class="input{{ $errors->has('address') ? ' is-danger' : '' }}" type="text"
+                                    name="address" placeholder="Event location" id="location-autocomplete" required>
 
                                 <input type="hidden" name="longitude" id="lng-autocomplete" value="">
                                 <input type="hidden" name="latitude" id="lat-autocomplete" value="">

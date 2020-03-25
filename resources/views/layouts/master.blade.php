@@ -40,11 +40,9 @@
 <body>
     <div id="app">
 
-        @if (! Request::is('/'))
+        @include('home.partials.topbar')
 
         @include('partials.navbar')
-
-        @endif
 
         <main id="@yield('main-class')">
             <router-view></router-view>

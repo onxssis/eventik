@@ -53,9 +53,8 @@ class EventsController extends Controller
      */
     public function store(StoreEvent $request)
     {
-        $request->uploadEventImage()
-            ->persist()
-        ;
+        return $request->uploadEventImage()
+            ->persist();
     }
 
     /**

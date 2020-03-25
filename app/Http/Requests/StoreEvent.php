@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Category;
 use App\Event;
 use Illuminate\Foundation\Http\FormRequest;
+use Phaza\LaravelPostgis\Geometries\Point;
 
 class StoreEvent extends FormRequest
 {
@@ -33,6 +34,9 @@ class StoreEvent extends FormRequest
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'address' => 'required',
+            'longitude' => 'required',
+            'latitude' => 'required',
+            'image' => 'required',
         ];
     }
 
@@ -46,8 +50,8 @@ class StoreEvent extends FormRequest
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'address' => $this->address,
-            'location' => $this->location,
-            'image' => $this->imagePath,
+            'location' => new Point($this->latitude, $this->longitude),
+            'image' => '/storage/' . $this->imagePath,
         ]);
 
         $categories = Category::find($this->categories);
@@ -56,7 +60,7 @@ class StoreEvent extends FormRequest
 
         session()->flash('success', 'Event created successfully.');
 
-        return $event;
+        return redirect()->to('/');
     }
 
     public function uploadEventImage()
