@@ -68,7 +68,9 @@ class StoreEvent extends FormRequest
         $uploadedImage = $this->file('image');
 
         if ($uploadedImage) {
-            $this->imagePath = $uploadedImage->store('covers', 'public');
+            app()->environment() === 'local' ?
+                $this->imagePath = $uploadedImage->store('covers', 'public') :
+                $this->imagePath = $uploadedImage->store('covers', 's3');
         } else {
             $this->imagePath = $this->image;
         }
