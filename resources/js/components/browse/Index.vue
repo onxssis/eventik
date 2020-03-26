@@ -138,6 +138,8 @@ export default {
 @media (min-width: 65em) {
   .browse-map {
     display: block !important;
+    height: unset !important;
+    margin-bottom: 2rem;
   }
 }
 

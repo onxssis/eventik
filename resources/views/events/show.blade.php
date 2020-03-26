@@ -25,13 +25,13 @@
 
                         <div class="time-head">
                             <time>
-                                <p>Apr</p>
-                                <p>04</p>
+                                <p>{{ $event->start_date->format('M') }}</p>
+                                <p>{{ $event->start_date->format('d') }}</p>
                             </time>
                         </div>
 
                         <div class="time-body p-t-md">
-                            <h1 class="is-uppercase">{{ $event->title }}</h1>
+                            <h1 class="is-uppercase title is-size-4">{{ $event->title }}</h1>
 
                             <div class="m-t-lg">
                                 <div class="l-media clrfix listing-organizer-title">
@@ -96,14 +96,10 @@
                                 <meta content="2019-07-20T08:00:00+01:00">
                                 <meta content="2019-07-20T16:00:00+01:00">
                                 <time class="clrfix" data-automation="event-details-time">
-                                    <p>Sat, July 20, 2019</p>
-                                    <p>8:00 AM – 4:00 PM WAT</p>
-                                    <p class="hide-small hide-medium">
-                                        <a class="js-add-to-calendar-modal js-d-dialog-trigger"
-                                            href="#add-to-calendar-modal" data-automation="add-to-calendar"
-                                            role="button" aria-haspopup="true"
-                                            dorsal-guid="4e221c02-457d-7c00-e435-a9567aa434e1"
-                                            data-xd-wired="dialog-trigger">Add to Calendar</a>
+                                    <p>{{ $event->start_date->format('D, M d, Y') }}</p>
+                                    <p>{{ $event->start_date->format('h:i A') }} – {{ $event->start_date->format('h:i A') }}</p>
+                                    <p class="hide-small hide-medium m-t-md is-hidden">
+                                        <a>Add to Calendar</a>
                                     </p>
                                 </time>
                             </div>
