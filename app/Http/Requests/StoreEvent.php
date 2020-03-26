@@ -51,7 +51,7 @@ class StoreEvent extends FormRequest
             'end_date' => $this->end_date,
             'address' => $this->address,
             'location' => new Point($this->latitude, $this->longitude),
-            'image' => '/storage/' . $this->imagePath,
+            'image' => $this->imagePath,
         ]);
 
         $categories = Category::find($this->categories);
@@ -69,8 +69,8 @@ class StoreEvent extends FormRequest
 
         if ($uploadedImage) {
             app()->environment() === 'local' ?
-                $this->imagePath = $uploadedImage->store('covers', 'public') :
-                $this->imagePath = $uploadedImage->store('covers', 's3');
+                $this->imagePath = '/storage/' . $uploadedImage->store('covers', 'public') :
+                $this->imagePath =  env('AWS_URL') . $uploadedImage->store('covers', 's3');
         } else {
             $this->imagePath = $this->image;
         }
