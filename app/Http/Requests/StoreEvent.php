@@ -46,7 +46,7 @@ class StoreEvent extends FormRequest
             'user_id' => auth()->id(),
             'title' => $this->title,
             'description' => $this->description,
-            'price' => $this->price,
+            'price' => $this->price * 100,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'address' => $this->address,

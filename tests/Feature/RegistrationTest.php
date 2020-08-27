@@ -73,7 +73,7 @@ class RegistrationTest extends TestCase
             'password_confirmation' => 'password',
         ]);
 
-        $response->assertStatus(302);
+        $response->assertStatus(201);
 
         $user = User::first();
 
