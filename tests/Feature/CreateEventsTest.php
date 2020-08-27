@@ -100,7 +100,6 @@ class CreateEventsTest extends TestCase
             ->post(route('events.store', array_merge(
                 $transformedEvent,
                 ['location' => '6.56679 -21.34554']
-            )))
-        ;
+            )));
     }
 }

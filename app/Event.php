@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
+use MStaack\LaravelPostgis\Eloquent\PostgisTrait;
 
 class Event extends Model
 {

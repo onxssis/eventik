@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Category;
 use App\Event;
 use Illuminate\Foundation\Http\FormRequest;
-use Phaza\LaravelPostgis\Geometries\Point;
+use MStaack\LaravelPostgis\Geometries\Point;
 
 class StoreEvent extends FormRequest
 {
@@ -34,8 +34,8 @@ class StoreEvent extends FormRequest
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'address' => 'required',
-            'longitude' => 'required',
-            'latitude' => 'required',
+            // 'longitude' => 'required',
+            // 'latitude' => 'required',
             'image' => 'required',
         ];
     }

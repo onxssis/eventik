@@ -3,7 +3,7 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\DB;
-use Phaza\LaravelPostgis\Geometries\Point;
+use MStaack\LaravelPostgis\Geometries\Point;
 
 class Queries
 {
@@ -24,16 +24,15 @@ class Queries
 
         return
             $builder->selectRaw($nearByQuery)
-                ->where(
-                    DB::raw(
-                        "ST_Distance(ST_GeographyFromText('SRID=4326;{$point->toWkT()}'), location)"
-                    ),
-                    $operator,
-                    $distance
-                )
-        // ->where('start_date', '>=', Carbon::today())
-                ->limit($limit)
-                ->get()
-            ;
+            ->where(
+                DB::raw(
+                    "ST_Distance(ST_GeographyFromText('SRID=4326;{$point->toWkT()}'), location)"
+                ),
+                $operator,
+                $distance
+            )
+            // ->where('start_date', '>=', Carbon::today())
+            ->limit($limit)
+            ->get();
     }
 }

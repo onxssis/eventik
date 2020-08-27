@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Event;
+use Illuminate\Support\Str;
 
 class Slug
 {
@@ -17,7 +18,7 @@ class Slug
     public function createSlug($title, $id = 0)
     {
         // Normalize the title
-        $slug = str_slug($title);
+        $slug = Str::slug($title);
 
         // Get any that could possibly be related.
         // This cuts the queries down by doing it once.
@@ -30,7 +31,7 @@ class Slug
 
         // Just append numbers like a savage until we find not used.
         for ($i = 1; $i <= 10; ++$i) {
-            $newSlug = $slug.'-'.$i;
+            $newSlug = $slug . '-' . $i;
             if (!$allSlugs->contains('slug', $newSlug)) {
                 return $newSlug;
             }
@@ -41,9 +42,8 @@ class Slug
 
     protected function getRelatedSlugs($slug, $id = 0)
     {
-        return Event::select('slug')->where('slug', 'like', $slug.'%')
+        return Event::select('slug')->where('slug', 'like', $slug . '%')
             ->where('id', '<>', $id)
-            ->get()
-        ;
+            ->get();
     }
 }
