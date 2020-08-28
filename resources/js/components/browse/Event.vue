@@ -1,29 +1,31 @@
 <template>
-  <article>
-    <div class="cont">
-      <div class="img-hold" :style="eventImgStyles">
-        <!-- <img :src="event.image" :alt="event.title" /> -->
-        <div class="free" v-if="free">Free</div>
-      </div>
-      <div class="aside">
-        <h4>{{ event.title }}</h4>
-        <div>
-          <p>{{ event.formattedStartDate }}</p>
-          <p>{{ event.address }}</p>
-          <p v-html="event.formattedPrice"></p>
+  <a :href="`events/${event.slug}`">
+    <article>
+      <div class="cont">
+        <div class="img-hold" :style="eventImgStyles">
+          <!-- <img :src="event.image" :alt="event.title" /> -->
+          <div class="free" v-if="free">Free</div>
         </div>
-        <div class="button-container">
+        <div class="aside">
+          <h4>{{ event.title }}</h4>
           <div>
-            <ShareButton />
+            <p>{{ event.formattedStartDate }}</p>
+            <p>{{ event.address }}</p>
+            <p v-html="event.formattedPrice"></p>
           </div>
+          <div class="button-container">
+            <div>
+              <ShareButton />
+            </div>
 
-          <div>
-            <LikeButton />
+            <div>
+              <LikeButton />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </article>
+    </article>
+  </a>
 </template>
 
 

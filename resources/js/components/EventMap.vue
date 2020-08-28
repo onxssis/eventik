@@ -171,6 +171,13 @@ export default {
 .switch {
   display: flex;
   justify-content: flex-end;
+  padding: 0 16px;
+}
+
+@media (min-width: 1024px) {
+  .switch {
+    padding: 0;
+  }
 }
 
 .event-map {

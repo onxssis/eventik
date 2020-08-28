@@ -33,14 +33,12 @@
 
             <h2 class="empty center" v-if="!filteredEvents.length">No results</h2>
 
-            <a href>
-              <event
-                v-for="event in filteredEvents"
-                :event="event"
-                :key="event.id"
-                v-show="!loading"
-              ></event>
-            </a>
+            <event
+              v-for="event in filteredEvents"
+              :event="event"
+              :key="event.id"
+              v-show="!loading"
+            ></event>
           </div>
 
           <pagination v-if="filteredEvents.length" :meta="paginationMeta"></pagination>
@@ -125,13 +123,32 @@ export default {
 </script>
 
 <style lang="scss">
-@media (min-width: 50em) {
+.browse {
+  display: flex;
+  flex-direction: column;
+}
+
+.browse-aside {
+  order: 2;
+}
+
+@media (min-width: 768px) {
+  .cont {
+    grid-template-columns: 250px 1fr !important;
+  }
+}
+
+@media (min-width: 1024px) {
   .browse {
     display: grid;
     grid-template-columns: 35% 1fr;
     grid-gap: 20px;
     margin: 0 20px;
     position: relative;
+  }
+
+  .browse-aside {
+    order: unset;
   }
 }
 
