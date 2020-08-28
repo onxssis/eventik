@@ -6,13 +6,13 @@ use App\Category;
 use App\Event;
 use App\Http\Requests\StoreEvent;
 use App\Http\Requests\UpdateEvent;
-use App\Repositories\Event\IEventRepository;
+use App\Repositories\Event\EventRepository;
 
 class EventsController extends Controller
 {
     protected $repo;
 
-    public function __construct(IEventRepository $repo)
+    public function __construct(EventRepository $repo)
     {
         $this->repo = $repo;
         $this->middleware('auth')->except(['show', 'index']);

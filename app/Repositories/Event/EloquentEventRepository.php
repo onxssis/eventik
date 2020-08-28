@@ -5,7 +5,7 @@ namespace App\Repositories\Event;
 use App\Event;
 use Carbon\Carbon;
 
-class EloquentEventRepository implements IEventRepository
+class EloquentEventRepository implements EventRepository
 {
     protected $model;
 
@@ -33,7 +33,14 @@ class EloquentEventRepository implements IEventRepository
         return $this->model->where('start_date', '>=', Carbon::today())
             ->limit($limit)
             ->orderBy('start_date', 'desc')
-            ->get()
-        ;
+            ->get();
+    }
+    
+    public function getPastEvents($limit = 5)
+    {
+        return $this->model->where('start_date', '<', Carbon::today())
+            ->limit($limit)
+            ->orderBy('end_date', 'desc')
+            ->get();
     }
 }
