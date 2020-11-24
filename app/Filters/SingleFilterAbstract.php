@@ -3,7 +3,7 @@
 namespace App\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
-
+use Illuminate\Support\Arr;
 
 abstract class SingleFilterAbstract
 {
@@ -16,7 +16,7 @@ abstract class SingleFilterAbstract
 
     protected function resolveFilterValue($filterKey)
     {
-        return array_get($this->mappings(), $filterKey);
+        return Arr::get($this->mappings(), $filterKey);
     }
 
 }

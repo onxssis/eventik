@@ -19,6 +19,18 @@ class AccessFilter extends SingleFilterAbstract
     {
         $value = $this->resolveFilterValue($key);
 
-        return $value ? ($value === 'paid' ? $builder->where('price', '>', 0) : $builder->where('price', 0)) : $builder;
+        if ($value) {
+
+            if ($value === 'paid') {
+                $builder->where('price', '>', 0);
+            } else {
+                $builder->where('price', 0);
+            }
+
+            return $builder;
+
+        } else {
+            return $builder;
+        }
     }
 }
