@@ -3,11 +3,7 @@ function initAutocomplete() {
     const lng = document.getElementById('lng-autocomplete');
     const lat = document.getElementById('lat-autocomplete');
 
-    const options = {
-        componentRestrictions: { country: 'ng' },
-    };
-
-    let autocomplete = new google.maps.places.Autocomplete(input, options);
+    let autocomplete = new google.maps.places.Autocomplete(input);
 
     autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace();
